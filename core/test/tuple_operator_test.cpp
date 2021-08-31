@@ -8,7 +8,7 @@ using namespace Catch;
 namespace ray_tracer {
 namespace core {
 
-SCENARIO("Adding two tuples") {
+SCENARIO("Tuple addition") {
   GIVEN("two vectors") {
     const Vector vector1(3., -2., 5.);
     const Vector vector2(-2., 3., 1.);
@@ -80,15 +80,71 @@ SCENARIO("Adding two tuples") {
     }
   }
 }
-SCENARIO("Negating a vector") {
+
+SCENARIO("Tuple negation") {
   GIVEN("a vector") {
     const Vector vector(3., -2., 5.);
-    WHEN("they it negated") {
+    WHEN("it is negated") {
       const auto result = -vector;
       THEN("the result is correct") {
         REQUIRE(result.x == Approx(-vector.x));
         REQUIRE(result.y == Approx(-vector.y));
         REQUIRE(result.z == Approx(-vector.z));
+      }
+    }
+  }
+}
+
+SCENARIO("Tuple scalar multiplication") {
+  GIVEN("a vector and a scalar") {
+    const Vector vector(3., -2., 5.);
+    const Decimal x{3.14};
+    WHEN("they are multiplied") {
+      const auto result = x * vector;
+      THEN("the result is correct") {
+        REQUIRE(result.x == Approx(x * vector.x));
+        REQUIRE(result.y == Approx(x * vector.y));
+        REQUIRE(result.z == Approx(x * vector.z));
+      }
+    }
+    WHEN("they are multiplied in reverse order") {
+      const auto result = vector * x;
+      THEN("the result is correct") {
+        REQUIRE(result.x == Approx(x * vector.x));
+        REQUIRE(result.y == Approx(x * vector.y));
+        REQUIRE(result.z == Approx(x * vector.z));
+      }
+    }
+    WHEN("the vecor is directly scaled") {
+      auto result = vector;
+      result *= x;
+      THEN("the result is correct") {
+        REQUIRE(result.x == Approx(x * vector.x));
+        REQUIRE(result.y == Approx(x * vector.y));
+        REQUIRE(result.z == Approx(x * vector.z));
+      }
+    }
+  }
+}
+SCENARIO("Tuple scalar division") {
+  GIVEN("a vector and a scalar") {
+    const Vector vector(3., -2., 5.);
+    const Decimal x{3.14};
+    WHEN("the vector is divided") {
+      const auto result = vector / x;
+      THEN("the result is correct") {
+        REQUIRE(result.x == Approx(vector.x / x));
+        REQUIRE(result.y == Approx(vector.y / x));
+        REQUIRE(result.z == Approx(vector.z / x));
+      }
+    }
+    WHEN("the vecor is directly scaled") {
+      auto result = vector;
+      result /= x;
+      THEN("the result is correct") {
+        REQUIRE(result.x == Approx(vector.x / x));
+        REQUIRE(result.y == Approx(vector.y / x));
+        REQUIRE(result.z == Approx(vector.z / x));
       }
     }
   }
