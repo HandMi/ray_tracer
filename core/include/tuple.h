@@ -5,7 +5,6 @@
 #include <cmath>
 
 namespace ray_tracer {
-namespace core {
 struct Tuple {
   Tuple() = default;
   constexpr Tuple(Decimal x, Decimal y, Decimal z) : x{x}, y{y}, z{z} {};
@@ -64,6 +63,13 @@ struct Vector : Tuple {
 struct Point : Tuple {
   Point() = default;
   constexpr Point(Decimal x, Decimal y, Decimal z) : Tuple(x, y, z){};
+
+  constexpr Point& operator+=(const Vector& a) {
+    x += a.x;
+    y += a.y;
+    z += a.z;
+    return *this;
+  }
 };
 
 // Addition
@@ -104,7 +110,6 @@ constexpr Vector cross(const Vector& a, const Vector& b) {
   return {a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x};
 }
 
-}  // namespace core
 }  // namespace ray_tracer
 
 #endif

@@ -6,7 +6,6 @@
 using namespace Catch;
 
 namespace ray_tracer {
-namespace core {
 
 SCENARIO("Tuple addition") {
   GIVEN("two vectors") {
@@ -149,5 +148,4 @@ SCENARIO("Tuple scalar division") {
     }
   }
 }
-}  // namespace core
 }  // namespace ray_tracer

@@ -6,7 +6,6 @@
 using namespace Catch;
 
 namespace ray_tracer {
-namespace core {
 
 SCENARIO("Vector length") {
   GIVEN("a vector") {
@@ -69,5 +68,4 @@ SCENARIO("Vector cross product") {
     }
   }
 }
-}  // namespace core
 }  // namespace ray_tracer
