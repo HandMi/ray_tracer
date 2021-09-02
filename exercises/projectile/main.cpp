@@ -1,5 +1,6 @@
 #include "projectile.h"
 #include <iostream>
+
 void tick(const Environment& environment, Projectile& projectile) {
   projectile.position += projectile.velocity;
   projectile.velocity += environment.gravity + environment.wind;

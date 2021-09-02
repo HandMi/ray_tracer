@@ -11,3 +11,4 @@ include(Catch)
 
 add_subdirectory(core)
 add_subdirectory(exercises)
+add_subdirectory(writer)
