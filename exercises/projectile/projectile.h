@@ -1,7 +1,7 @@
 #ifndef EXERCISES_PROJECTILE_H
 #define EXERCISES_PROJECTILE_H
 
-#include "tuple.h"
+#include "core/tuple.h"
 
 struct Projectile {
   ray_tracer::Point position{};

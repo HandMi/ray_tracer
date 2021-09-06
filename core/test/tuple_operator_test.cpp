@@ -1,5 +1,5 @@
 
-#include "tuple.h"
+#include "core/tuple.h"
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
@@ -14,35 +14,35 @@ SCENARIO("Tuple addition") {
     WHEN("they are subtracted") {
       const auto result = vector2 - vector1;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(vector2.x - vector1.x));
-        REQUIRE(result.y == Approx(vector2.y - vector1.y));
-        REQUIRE(result.z == Approx(vector2.z - vector1.z));
+        REQUIRE(result.x() == Approx(vector2.x() - vector1.x()));
+        REQUIRE(result.y() == Approx(vector2.y() - vector1.y()));
+        REQUIRE(result.z() == Approx(vector2.z() - vector1.z()));
       }
     }
     WHEN("they are added") {
       const auto result = vector2 + vector1;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(vector2.x + vector1.x));
-        REQUIRE(result.y == Approx(vector2.y + vector1.y));
-        REQUIRE(result.z == Approx(vector2.z + vector1.z));
+        REQUIRE(result.x() == Approx(vector2.x() + vector1.x()));
+        REQUIRE(result.y() == Approx(vector2.y() + vector1.y()));
+        REQUIRE(result.z() == Approx(vector2.z() + vector1.z()));
       }
     }
     WHEN("they one is added to the other") {
       auto result = vector1;
       result += vector2;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(vector2.x + vector1.x));
-        REQUIRE(result.y == Approx(vector2.y + vector1.y));
-        REQUIRE(result.z == Approx(vector2.z + vector1.z));
+        REQUIRE(result.x() == Approx(vector2.x() + vector1.x()));
+        REQUIRE(result.y() == Approx(vector2.y() + vector1.y()));
+        REQUIRE(result.z() == Approx(vector2.z() + vector1.z()));
       }
     }
     WHEN("they one is subtracted from the other") {
       auto result = vector2;
       result -= vector1;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(vector2.x - vector1.x));
-        REQUIRE(result.y == Approx(vector2.y - vector1.y));
-        REQUIRE(result.z == Approx(vector2.z - vector1.z));
+        REQUIRE(result.x() == Approx(vector2.x() - vector1.x()));
+        REQUIRE(result.y() == Approx(vector2.y() - vector1.y()));
+        REQUIRE(result.z() == Approx(vector2.z() - vector1.z()));
       }
     }
   }
@@ -52,9 +52,9 @@ SCENARIO("Tuple addition") {
     WHEN("they are subtracted") {
       const auto result = point2 - point1;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(point2.x - point1.x));
-        REQUIRE(result.y == Approx(point2.y - point1.y));
-        REQUIRE(result.z == Approx(point2.z - point1.z));
+        REQUIRE(result.x() == Approx(point2.x() - point1.x()));
+        REQUIRE(result.y() == Approx(point2.y() - point1.y()));
+        REQUIRE(result.z() == Approx(point2.z() - point1.z()));
       }
     }
   }
@@ -64,17 +64,17 @@ SCENARIO("Tuple addition") {
     WHEN("they are subtracted") {
       const auto result = point - vector;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(point.x - vector.x));
-        REQUIRE(result.y == Approx(point.y - vector.y));
-        REQUIRE(result.z == Approx(point.z - vector.z));
+        REQUIRE(result.x() == Approx(point.x() - vector.x()));
+        REQUIRE(result.y() == Approx(point.y() - vector.y()));
+        REQUIRE(result.z() == Approx(point.z() - vector.z()));
       }
     }
     WHEN("they are added") {
       const auto result = point + vector;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(point.x + vector.x));
-        REQUIRE(result.y == Approx(point.y + vector.y));
-        REQUIRE(result.z == Approx(point.z + vector.z));
+        REQUIRE(result.x() == Approx(point.x() + vector.x()));
+        REQUIRE(result.y() == Approx(point.y() + vector.y()));
+        REQUIRE(result.z() == Approx(point.z() + vector.z()));
       }
     }
   }
@@ -86,9 +86,9 @@ SCENARIO("Tuple negation") {
     WHEN("it is negated") {
       const auto result = -vector;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(-vector.x));
-        REQUIRE(result.y == Approx(-vector.y));
-        REQUIRE(result.z == Approx(-vector.z));
+        REQUIRE(result.x() == Approx(-vector.x()));
+        REQUIRE(result.y() == Approx(-vector.y()));
+        REQUIRE(result.z() == Approx(-vector.z()));
       }
     }
   }
@@ -97,30 +97,30 @@ SCENARIO("Tuple negation") {
 SCENARIO("Tuple scalar multiplication") {
   GIVEN("a vector and a scalar") {
     const Vector vector(3., -2., 5.);
-    const Decimal x{3.14};
+    const Decimal a{3.14};
     WHEN("they are multiplied") {
-      const auto result = x * vector;
+      const Vector result = a * vector;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(x * vector.x));
-        REQUIRE(result.y == Approx(x * vector.y));
-        REQUIRE(result.z == Approx(x * vector.z));
+        REQUIRE(result.x() == Approx(a * vector.x()));
+        REQUIRE(result.y() == Approx(a * vector.y()));
+        REQUIRE(result.z() == Approx(a * vector.z()));
       }
     }
     WHEN("they are multiplied in reverse order") {
-      const auto result = vector * x;
+      const auto result = vector * a;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(x * vector.x));
-        REQUIRE(result.y == Approx(x * vector.y));
-        REQUIRE(result.z == Approx(x * vector.z));
+        REQUIRE(result.x() == Approx(a * vector.x()));
+        REQUIRE(result.y() == Approx(a * vector.y()));
+        REQUIRE(result.z() == Approx(a * vector.z()));
       }
     }
     WHEN("the vecor is directly scaled") {
       auto result = vector;
-      result *= x;
+      result *= a;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(x * vector.x));
-        REQUIRE(result.y == Approx(x * vector.y));
-        REQUIRE(result.z == Approx(x * vector.z));
+        REQUIRE(result.x() == Approx(a * vector.x()));
+        REQUIRE(result.y() == Approx(a * vector.y()));
+        REQUIRE(result.z() == Approx(a * vector.z()));
       }
     }
   }
@@ -128,22 +128,22 @@ SCENARIO("Tuple scalar multiplication") {
 SCENARIO("Tuple scalar division") {
   GIVEN("a vector and a scalar") {
     const Vector vector(3., -2., 5.);
-    const Decimal x{3.14};
+    const Decimal a{3.14};
     WHEN("the vector is divided") {
-      const auto result = vector / x;
+      const auto result = vector / a;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(vector.x / x));
-        REQUIRE(result.y == Approx(vector.y / x));
-        REQUIRE(result.z == Approx(vector.z / x));
+        REQUIRE(result.x() == Approx(vector.x() / a));
+        REQUIRE(result.y() == Approx(vector.y() / a));
+        REQUIRE(result.z() == Approx(vector.z() / a));
       }
     }
     WHEN("the vecor is directly scaled") {
       auto result = vector;
-      result /= x;
+      result /= a;
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(vector.x / x));
-        REQUIRE(result.y == Approx(vector.y / x));
-        REQUIRE(result.z == Approx(vector.z / x));
+        REQUIRE(result.x() == Approx(vector.x() / a));
+        REQUIRE(result.y() == Approx(vector.y() / a));
+        REQUIRE(result.z() == Approx(vector.z() / a));
       }
     }
   }

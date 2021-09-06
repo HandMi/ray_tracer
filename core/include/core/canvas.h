@@ -14,21 +14,31 @@ class Canvas {
 
  public:
   Canvas() = default;
-  Canvas(std::size_t width, std::size_t height) : width{width}, height{height} {
+  Canvas(UInteger width, UInteger height) : width{width}, height{height} {
     grid = Grid(height, Row(width, {0., 0., 0.}));
   };
-  const std::size_t width{};
-  const std::size_t height{};
-  Color get(const std::size_t i, const std::size_t j) const {
+  const UInteger width{};
+  const UInteger height{};
+
+  Color get(const UInteger i, const UInteger j) const {
     if (i < width && j < height) {
       return grid[j][i];
     } else {
       return {};
     }
   }
-  void set(const std::size_t i, const std::size_t j, const Color color) {
+
+  void set(const UInteger i, const UInteger j, const Color color) {
     if (i < width && j < height) {
       grid[j][i] = color;
+    }
+  }
+
+  void setAll(const Color color) {
+    for (auto& row : grid) {
+      for (auto& c : row) {
+        c = color;
+      }
     }
   }
 };

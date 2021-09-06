@@ -1,3 +1,3 @@
 add_executable(projectile main.cpp
 )
-target_link_libraries(projectile PRIVATE core)
+target_link_libraries(projectile PUBLIC core ppmwriter)

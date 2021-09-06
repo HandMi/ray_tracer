@@ -1,5 +1,5 @@
 
-#include "tuple.h"
+#include "core/tuple.h"
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
@@ -25,9 +25,9 @@ SCENARIO("Vector normalization") {
       THEN("the length is one") {
         const auto result = vector.length();
         REQUIRE(result == Approx(1.));
-        REQUIRE(vector.x == Approx(2. / 15.));
-        REQUIRE(vector.y == Approx(-10. / 15.));
-        REQUIRE(vector.z == Approx(11. / 15.));
+        REQUIRE(vector.x() == Approx(2. / 15.));
+        REQUIRE(vector.y() == Approx(-10. / 15.));
+        REQUIRE(vector.z() == Approx(11. / 15.));
       }
     }
   }
@@ -39,9 +39,7 @@ SCENARIO("Vector dot product") {
     const Vector vector2(-2., 3., 1.);
     WHEN("they are dot multiplied") {
       const auto result = dot(vector1, vector2);
-      THEN("the result is correct") {
-        REQUIRE(result == Approx(-7.));
-      }
+      THEN("the result is correct") { REQUIRE(result == Approx(-7.)); }
     }
   }
 }
@@ -53,17 +51,17 @@ SCENARIO("Vector cross product") {
     WHEN("they are cross multiplied") {
       const auto result = cross(vector1, vector2);
       THEN("the result is correct") {
-        REQUIRE(result.x == Approx(-1.));
-        REQUIRE(result.y == Approx(2.));
-        REQUIRE(result.z == Approx(-1.));
+        REQUIRE(result.x() == Approx(-1.));
+        REQUIRE(result.y() == Approx(2.));
+        REQUIRE(result.z() == Approx(-1.));
       }
     }
     WHEN("they are cross multiplied in inverse order") {
       const auto result = cross(vector2, vector1);
       THEN("the result is inverted") {
-        REQUIRE(result.x == Approx(1.));
-        REQUIRE(result.y == Approx(-2.));
-        REQUIRE(result.z == Approx(1.));
+        REQUIRE(result.x() == Approx(1.));
+        REQUIRE(result.y() == Approx(-2.));
+        REQUIRE(result.z() == Approx(1.));
       }
     }
   }
