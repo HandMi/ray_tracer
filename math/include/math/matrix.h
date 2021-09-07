@@ -26,6 +26,27 @@ class Matrix {
     return data[i * cols + j];
   };
 
+  constexpr Matrix<cols, rows> T() const  {
+    Matrix<cols, rows> transpose{};
+    for (UInteger i = 0U; i < rows; ++i) {
+      for (UInteger j = 0U; j < cols; ++j) {
+        transpose(j, i) = (*this)(i, j);
+      }
+    }
+    return transpose;
+  }
+
+  template <UInteger r = rows, UInteger c = cols,
+            typename = typename std::enable_if<r == c>>
+  constexpr Matrix<c, r>& T() {
+    for (UInteger i = 0U; i < r; ++i) {
+      for (UInteger j = i + 1; j < c; ++j) {
+        std::swap((*this)(i, j), (*this)(j, i));
+      }
+    }
+    return *this;
+  }
+
  private:
   std::array<Decimal, rows * cols> data{};
 };
@@ -41,9 +62,7 @@ constexpr Matrix<rows, rows> Identity() {
   return identity;
 }
 
-constexpr Matrix4 Identity4(){
-    return Identity<4U>();
-}
+constexpr Matrix4 Identity4() { return Identity<4U>(); }
 
 template <UInteger rows1, UInteger cols1, UInteger cols2>
 constexpr Matrix<rows1, cols2> operator*(const Matrix<rows1, cols1>& matrix1,
