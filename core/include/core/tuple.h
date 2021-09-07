@@ -51,6 +51,7 @@ struct Tuple {
 struct Vector : public Tuple<4U> {
   Vector() = default;
   constexpr Vector(Decimal x, Decimal y, Decimal z) : Tuple({x, y, z, 0.}){};
+  constexpr Vector(const Tuple& a) : Tuple(a){};
   constexpr Decimal x() const { return data[0]; };
   constexpr Decimal y() const { return data[1]; };
   constexpr Decimal z() const { return data[2]; };
@@ -95,14 +96,14 @@ struct Vector : public Tuple<4U> {
     return {x() - a.x(), y() - a.y(), z() - a.z()};
   }
 
-  Vector& operator+=(const Vector& a) {
+  constexpr Vector& operator+=(const Vector& a) {
     data[0] += a.x();
     data[1] += a.y();
     data[2] += a.z();
     return *this;
   }
 
-  Vector& operator-=(const Vector& a) {
+  constexpr Vector& operator-=(const Vector& a) {
     data[0] -= a.x();
     data[1] -= a.y();
     data[2] -= a.z();
@@ -118,11 +119,12 @@ struct Vector : public Tuple<4U> {
 struct Point : Tuple<4U> {
   Point() = default;
   constexpr Point(Decimal x, Decimal y, Decimal z) : Tuple({x, y, z, 1.0}){};
-  inline Decimal x() const { return data[0]; };
-  inline Decimal y() const { return data[1]; };
-  inline Decimal z() const { return data[2]; };
+  constexpr Point(const Tuple& a) : Tuple(a){};
+  constexpr Decimal x() const { return data[0]; };
+  constexpr Decimal y() const { return data[1]; };
+  constexpr Decimal z() const { return data[2]; };
 
-  Point& operator+=(const Vector& a) {
+  constexpr Point& operator+=(const Vector& a) {
     data[0] += a.x();
     data[1] += a.y();
     data[2] += a.z();
@@ -131,16 +133,16 @@ struct Point : Tuple<4U> {
 };
 
 // Addition
-inline Point operator+(const Point& a, const Vector& b) {
+constexpr Point operator+(const Point& a, const Vector& b) {
   return {a.x() + b.x(), a.y() + b.y(), a.z() + b.z()};
 }
 
 // Subtraction
-inline Point operator-(const Point& a, const Vector& b) {
+constexpr Point operator-(const Point& a, const Vector& b) {
   return {a.x() - b.x(), a.y() - b.y(), a.z() - b.z()};
 }
 
-inline Vector operator-(const Point& a, const Point& b) {
+constexpr Vector operator-(const Point& a, const Point& b) {
   return {a.x() - b.x(), a.y() - b.y(), a.z() - b.z()};
 }
 

@@ -11,18 +11,18 @@ struct Color : Tuple<3U> {
   constexpr Decimal r() const { return data[0]; };
   constexpr Decimal g() const { return data[1]; };
   constexpr Decimal b() const { return data[2]; };
-  inline Decimal& r() { return data[0]; };
-  inline Decimal& g() { return data[1]; };
-  inline Decimal& b() { return data[2]; };
+  constexpr Decimal& r() { return data[0]; };
+  constexpr Decimal& g() { return data[1]; };
+  constexpr Decimal& b() { return data[2]; };
 
-  Color& operator+=(const Color& a) {
+  constexpr Color& operator+=(const Color& a) {
     r() += a.r();
     g() += a.g();
     b() += a.b();
     return *this;
   }
 
-  Color& operator-=(const Color& a) {
+  constexpr Color& operator-=(const Color& a) {
     r() -= a.r();
     g() -= a.g();
     b() -= a.b();
@@ -39,14 +39,14 @@ struct Color : Tuple<3U> {
 };
 
 // Scalar multiplication
-inline Color operator*(const Decimal& a, const Color& b) {
+constexpr Color operator*(const Decimal& a, const Color& b) {
   return {a * b.r(), a * b.g(), a * b.b()};
 }
 
-inline Color operator*(const Color& a, const Decimal& b) { return b * a; }
+constexpr Color operator*(const Color& a, const Decimal& b) { return b * a; }
 
 // Hadamard multiplication
-inline Color operator*(const Color& a, const Color& b) {
+constexpr Color operator*(const Color& a, const Color& b) {
   return {a.r() * b.r(), a.g() * b.g(), a.b() * b.b()};
 }
 
