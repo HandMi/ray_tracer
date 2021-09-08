@@ -26,7 +26,7 @@ class Matrix {
     return data[i * cols + j];
   };
 
-  constexpr Matrix<cols, rows> T() const  {
+  constexpr Matrix<cols, rows> T() const {
     Matrix<cols, rows> transpose{};
     for (UInteger i = 0U; i < rows; ++i) {
       for (UInteger j = 0U; j < cols; ++j) {
@@ -45,6 +45,26 @@ class Matrix {
       }
     }
     return *this;
+  }
+
+  template <UInteger r = rows, UInteger c = cols,
+            typename = typename std::enable_if<(r > 1) && (c > 1)>>
+  constexpr Matrix<c - 1, r - 1> sub(UInteger row, UInteger col) {
+    Matrix<c - 1, r - 1> sub_matrix{};
+    for (UInteger i = 0U; i < r-1; ++i) {
+      const auto k = i < row ? i : i + 1;
+      for (UInteger j = 0U; j < c-1; ++j) {
+        const auto m = j < col ? j : j + 1;
+        sub_matrix(i, j) = (*this)(k, m);
+      }
+    }
+    return sub_matrix;
+  }
+
+  template <UInteger r = rows, UInteger c = cols,
+            typename = typename std::enable_if<r == 2 && c == 2>>
+  constexpr Decimal determinant() const {
+    return (*this)(0, 0) * (*this)(1, 1) - (*this)(1, 0) * (*this)(0, 1);
   }
 
  private:
