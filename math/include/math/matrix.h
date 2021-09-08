@@ -67,6 +67,12 @@ class Matrix {
     return (*this)(0, 0) * (*this)(1, 1) - (*this)(1, 0) * (*this)(0, 1);
   }
 
+  template <UInteger r = rows, UInteger c = cols,
+            typename = typename std::enable_if<r == c>>
+  constexpr Decimal minorant(UInteger row, UInteger col) {
+    return this->sub(row,col).determinant();
+  }
+
  private:
   std::array<Decimal, rows * cols> data{};
 };

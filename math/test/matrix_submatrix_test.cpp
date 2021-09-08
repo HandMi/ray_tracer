@@ -31,5 +31,18 @@ SCENARIO("Matrix submatrix") {
       }
     }
   }
+  GIVEN("another matrix") {
+    math::Matrix<3U, 3U> A{{{{3, 5, 0}, {2, -1, -7}, {6, -1, 5}}}};
+    WHEN("a submatrix is computed") {
+      auto B = A.sub(1, 0);
+      THEN("the determinant is correct") {
+        const Decimal Expected = 25.;
+        REQUIRE(B.determinant() == Approx(Expected));
+        AND_THEN("the determinant is equal to the minor") {
+          REQUIRE(A.minorant(1, 0) == Approx(Expected));
+        }
+      }
+    }
+  }
 }
 }  // namespace ray_tracer
