@@ -19,12 +19,14 @@ class Matrix {
       }
     }
   }
+
   constexpr Decimal& operator()(UInteger i, UInteger j) {
     return data[i * cols + j];
-  };
+  }
+
   constexpr Decimal operator()(UInteger i, UInteger j) const {
     return data[i * cols + j];
-  };
+  }
 
   constexpr Matrix<cols, rows> T() const {
     Matrix<cols, rows> transpose{};
@@ -36,9 +38,8 @@ class Matrix {
     return transpose;
   }
 
-  template <UInteger r = rows, UInteger c = cols,
-            typename = typename std::enable_if<r == c>>
-  constexpr Matrix<c, r>& T() {
+  template <UInteger r = rows, UInteger c = cols>
+  constexpr typename std::enable_if<r == c, Matrix<c, r>&>::type T() {
     for (UInteger i = 0U; i < r; ++i) {
       for (UInteger j = i + 1; j < c; ++j) {
         std::swap((*this)(i, j), (*this)(j, i));
@@ -47,13 +48,14 @@ class Matrix {
     return *this;
   }
 
-  template <UInteger r = rows, UInteger c = cols,
-            typename = typename std::enable_if<(r > 1) && (c > 1)>>
-  constexpr Matrix<c - 1, r - 1> sub(UInteger row, UInteger col) {
+  template <UInteger r = rows, UInteger c = cols>
+  constexpr
+      typename std::enable_if<(r > 1) && (c > 1), Matrix<c - 1, r - 1>>::type
+      sub(UInteger row, UInteger col) const {
     Matrix<c - 1, r - 1> sub_matrix{};
-    for (UInteger i = 0U; i < r-1; ++i) {
+    for (UInteger i = 0U; i < r - 1; ++i) {
       const auto k = i < row ? i : i + 1;
-      for (UInteger j = 0U; j < c-1; ++j) {
+      for (UInteger j = 0U; j < c - 1; ++j) {
         const auto m = j < col ? j : j + 1;
         sub_matrix(i, j) = (*this)(k, m);
       }
@@ -61,16 +63,35 @@ class Matrix {
     return sub_matrix;
   }
 
-  template <UInteger r = rows, UInteger c = cols,
-            typename = typename std::enable_if<r == 2 && c == 2>>
-  constexpr Decimal determinant() const {
+  template <UInteger r = rows, UInteger c = cols>
+  constexpr
+      typename std::enable_if<(r == c) && (r == 2) && (c == 2), Decimal>::type
+      determinant() const {
     return (*this)(0, 0) * (*this)(1, 1) - (*this)(1, 0) * (*this)(0, 1);
   }
 
-  template <UInteger r = rows, UInteger c = cols,
-            typename = typename std::enable_if<r == c>>
-  constexpr Decimal minorant(UInteger row, UInteger col) {
-    return this->sub(row,col).determinant();
+  // This should probably replaced by LU factorization
+  template <UInteger r = rows, UInteger c = cols>
+  constexpr
+      typename std::enable_if<(r == c) && (r > 2) && (c > 2), Decimal>::type
+      determinant() const {
+    Decimal det{0.};
+    for (UInteger i = 0; i < c; ++i) {
+      det += (*this)(0, i) * cofactor(0, i);
+    }
+    return det;
+  }
+
+  template <UInteger r = rows, UInteger c = cols>
+  constexpr typename std::enable_if<r == c, Decimal>::type minorant(
+      UInteger row, UInteger col) const {
+    return sub(row, col).determinant();
+  }
+
+  template <UInteger r = rows, UInteger c = cols>
+  constexpr typename std::enable_if<r == c, Decimal>::type cofactor(
+      UInteger row, UInteger col) const {
+    return (row + col) % 2 == 1 ? -1. * minorant(row, col) : minorant(row, col);
   }
 
  private:

@@ -19,7 +19,7 @@ SCENARIO("Matrix submatrix") {
       }
     }
   }
-  GIVEN("another matrix") {
+  GIVEN("a matrix") {
     math::Matrix4 A{
         {{{-6, 1, 1, 6}, {-8, 5, 8, 6}, {-1, 0, 8, 2}, {-7, 1, -1, 1}}}};
     WHEN("a submatrix is computed") {
@@ -31,7 +31,7 @@ SCENARIO("Matrix submatrix") {
       }
     }
   }
-  GIVEN("another matrix") {
+  GIVEN("a matrix") {
     math::Matrix<3U, 3U> A{{{{3, 5, 0}, {2, -1, -7}, {6, -1, 5}}}};
     WHEN("a submatrix is computed") {
       auto B = A.sub(1, 0);
@@ -41,6 +41,23 @@ SCENARIO("Matrix submatrix") {
         AND_THEN("the determinant is equal to the minor") {
           REQUIRE(A.minorant(1, 0) == Approx(Expected));
         }
+      }
+    }
+  }
+  GIVEN("a matrix") {
+    math::Matrix<3U, 3U> A{{{{3, 5, 0}, {2, -1, -7}, {6, -1, 5}}}};
+    WHEN("a cofactor is computed") {
+      auto B = A.cofactor(0, 0);
+      THEN("the result is correct") {
+        const Decimal Expected = -12.;
+        REQUIRE(B == Approx(Expected));
+      }
+    }
+    WHEN("a cofactor is computed") {
+      auto B = A.cofactor(1, 0);
+      THEN("the result is correct") {
+        const Decimal Expected = -25.;
+        REQUIRE(B == Approx(Expected));
       }
     }
   }
