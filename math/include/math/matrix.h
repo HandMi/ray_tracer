@@ -52,7 +52,7 @@ class Matrix {
   constexpr
       typename std::enable_if<(r > 1) && (c > 1), Matrix<c - 1, r - 1>>::type
       sub(UInteger row, UInteger col) const {
-    Matrix<c - 1, r - 1> sub_matrix{};
+    Matrix<r - 1, c - 1> sub_matrix{};
     for (UInteger i = 0U; i < r - 1; ++i) {
       const auto k = i < row ? i : i + 1;
       for (UInteger j = 0U; j < c - 1; ++j) {
@@ -92,6 +92,22 @@ class Matrix {
   constexpr typename std::enable_if<r == c, Decimal>::type cofactor(
       UInteger row, UInteger col) const {
     return (row + col) % 2 == 1 ? -1. * minorant(row, col) : minorant(row, col);
+  }
+
+  template <UInteger r = rows, UInteger c = cols>
+  typename std::enable_if<(r == c), Matrix<r, c>>::type Inv() const {
+    constexpr Decimal EPSILON = 1e-07;
+    auto det = determinant();
+    if (std::abs(det) < EPSILON) {
+      throw std::domain_error("Matrix not invertible");
+    }
+    Matrix<r, c> inverse{};
+    for (UInteger i = 0U; i < r; ++i) {
+      for (UInteger j = 0U; j < c; ++j) {
+        inverse(i, j) = cofactor(i, j) / det;
+      }
+    }
+    return inverse.T();
   }
 
  private:
