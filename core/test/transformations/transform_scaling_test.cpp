@@ -1,7 +1,6 @@
 
 #include "core/transform.h"
 #include "core/tuple.h"
-#include "math/matrix.h"
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 

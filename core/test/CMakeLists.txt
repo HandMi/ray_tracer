@@ -4,8 +4,10 @@ add_executable(canvas_tests
 target_link_libraries(canvas_tests PRIVATE core Catch2::Catch2WithMain)
 
 add_executable(transformation_tests
+               transformations/transform_chaining_test.cpp
                transformations/transform_rotation_test.cpp
                transformations/transform_scaling_test.cpp
+               transformations/tuple_shearing_test.cpp
                transformations/tuple_rotation_test.cpp
                transformations/tuple_scaling_test.cpp
                transformations/tuple_translation_test.cpp
