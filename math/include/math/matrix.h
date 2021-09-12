@@ -1,8 +1,7 @@
 #ifndef MATH_INCLUDE_MATRIX_H
 #define MATH_INCLUDE_MATRIX_H
 
-#include "core/tuple.h"
-#include "core/types.h"
+#include "utils/types.h"
 #include <array>
 
 namespace ray_tracer {
@@ -140,27 +139,6 @@ constexpr Matrix<rows1, cols2> operator*(const Matrix<rows1, cols1>& matrix1,
   }
   return matrix_product;
 }
-
-template <UInteger rows, UInteger cols>
-constexpr Tuple<rows> operator*(const Matrix<rows, cols>& matrix,
-                                const Tuple<cols>& tuple) {
-  Tuple<rows> product{};
-  for (UInteger i = 0U; i < rows; ++i) {
-    for (UInteger j = 0U; j < cols; ++j) {
-      product(i) += matrix(i, j) * tuple(j);
-    }
-  }
-  return product;
-}
-
-constexpr Vector operator*(const Matrix4& matrix, const Vector& vector) {
-  return matrix * static_cast<const Tuple<4U>&>(vector);
-}
-
-constexpr Point operator*(const Matrix4& matrix, const Point& vector) {
-  return matrix * static_cast<const Tuple<4U>&>(vector);
-}
-
 }  // namespace math
 }  // namespace ray_tracer
 

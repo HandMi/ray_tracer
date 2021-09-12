@@ -1,0 +1,21 @@
+add_executable(canvas_tests
+               canvas/canvas_test.cpp
+               )
+target_link_libraries(canvas_tests PRIVATE core Catch2::Catch2WithMain)
+
+add_executable(transformation_tests
+               transformations/tuple_translation_test.cpp
+               )
+target_link_libraries(transformation_tests PRIVATE core Catch2::Catch2WithMain)
+
+add_executable(tuple_tests
+               tuple/color_operator_test.cpp
+               tuple/tuple_function_test.cpp
+               tuple/tuple_matrix_multiplication_test.cpp
+               tuple/tuple_operator_test.cpp
+               )
+
+target_link_libraries(tuple_tests PRIVATE core Catch2::Catch2WithMain)
+catch_discover_tests(canvas_tests)
+catch_discover_tests(transformation_tests)
+catch_discover_tests(tuple_tests)

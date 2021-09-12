@@ -2,7 +2,7 @@
 #define CORE_INCLUDE_COLOR_H
 
 #include "tuple.h"
-#include "types.h"
+#include "utils/types.h"
 
 namespace ray_tracer {
 struct Color : Tuple<3U> {

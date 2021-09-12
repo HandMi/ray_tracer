@@ -1,7 +1,9 @@
 #ifndef CORE_INCLUDE_TUPLE_H
 #define CORE_INCLUDE_TUPLE_H
 
-#include "types.h"
+#include "math/matrix.h"
+#include "transformations.h"
+#include "utils/types.h"
 #include <array>
 #include <cmath>
 
@@ -48,7 +50,7 @@ struct Tuple {
   std::array<Decimal, size> data{};
 };
 
-struct Vector : public Tuple<4U> {
+struct Vector : public Tuple<4U>, Transformations<Vector> {
   Vector() = default;
   constexpr Vector(Decimal x, Decimal y, Decimal z) : Tuple({x, y, z, 0.}){};
   constexpr Vector(const Tuple& a) : Tuple(a){};
@@ -116,7 +118,7 @@ struct Vector : public Tuple<4U> {
   constexpr void normalize() { *this /= length(); }
 };
 
-struct Point : Tuple<4U> {
+struct Point : Tuple<4U>, Transformations<Point> {
   Point() = default;
   constexpr Point(Decimal x, Decimal y, Decimal z) : Tuple({x, y, z, 1.0}){};
   constexpr Point(const Tuple& a) : Tuple(a){};
