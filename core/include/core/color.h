@@ -5,7 +5,7 @@
 #include "utils/types.h"
 
 namespace ray_tracer {
-struct Color : Tuple<3U> {
+struct Color : Tuple<3U, Color> {
   Color() = default;
   constexpr Color(Decimal r, Decimal g, Decimal b) : Tuple{{r, g, b}} {};
   constexpr Decimal r() const { return data[0]; };
@@ -37,13 +37,6 @@ struct Color : Tuple<3U> {
     return {r() - a.r(), g() - a.g(), b() - a.b()};
   }
 };
-
-// Scalar multiplication
-constexpr Color operator*(const Decimal& a, const Color& b) {
-  return {a * b.r(), a * b.g(), a * b.b()};
-}
-
-constexpr Color operator*(const Color& a, const Decimal& b) { return b * a; }
 
 // Hadamard multiplication
 constexpr Color operator*(const Color& a, const Color& b) {

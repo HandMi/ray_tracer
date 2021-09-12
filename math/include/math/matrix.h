@@ -7,11 +7,13 @@
 namespace ray_tracer {
 namespace math {
 
-template <UInteger rows, UInteger cols>
-class Matrix {
+template <template <UInteger, UInteger> class Derived, UInteger rows,
+          UInteger cols>
+class MatrixBase {
  public:
-  Matrix(){};
-  constexpr Matrix(const std::array<std::array<Decimal, cols>, rows> matrix) {
+  MatrixBase(){};
+  constexpr MatrixBase(
+      const std::array<std::array<Decimal, cols>, rows> matrix) {
     for (UInteger i = 0U; i < rows; ++i) {
       for (UInteger j = 0U; j < cols; ++j) {
         data[i * cols + j] = matrix[i][j];
@@ -27,8 +29,8 @@ class Matrix {
     return data[i * cols + j];
   }
 
-  constexpr Matrix<cols, rows> T() const {
-    Matrix<cols, rows> transpose{};
+  constexpr Derived<cols, rows> T() const {
+    Derived<cols, rows> transpose{};
     for (UInteger i = 0U; i < rows; ++i) {
       for (UInteger j = 0U; j < cols; ++j) {
         transpose(j, i) = (*this)(i, j);
@@ -38,20 +40,20 @@ class Matrix {
   }
 
   template <UInteger r = rows, UInteger c = cols>
-  constexpr typename std::enable_if<r == c, Matrix<c, r>&>::type T() {
+  constexpr typename std::enable_if<r == c, Derived<c, r>&>::type T() {
     for (UInteger i = 0U; i < r; ++i) {
       for (UInteger j = i + 1; j < c; ++j) {
         std::swap((*this)(i, j), (*this)(j, i));
       }
     }
-    return *this;
+    return static_cast<Derived<c, r>&>(*this);
   }
 
   template <UInteger r = rows, UInteger c = cols>
   constexpr
-      typename std::enable_if<(r > 1) && (c > 1), Matrix<c - 1, r - 1>>::type
+      typename std::enable_if<(r > 1) && (c > 1), Derived<c - 1, r - 1>>::type
       sub(UInteger row, UInteger col) const {
-    Matrix<r - 1, c - 1> sub_matrix{};
+    Derived<r - 1, c - 1> sub_matrix{};
     for (UInteger i = 0U; i < r - 1; ++i) {
       const auto k = i < row ? i : i + 1;
       for (UInteger j = 0U; j < c - 1; ++j) {
@@ -94,13 +96,13 @@ class Matrix {
   }
 
   template <UInteger r = rows, UInteger c = cols>
-  typename std::enable_if<(r == c), Matrix<r, c>>::type Inv() const {
+  typename std::enable_if<(r == c), Derived<r, c>>::type Inv() const {
     constexpr Decimal EPSILON = 1e-07;
     auto det = determinant();
     if (std::abs(det) < EPSILON) {
       throw std::domain_error("Matrix not invertible");
     }
-    Matrix<r, c> inverse{};
+    Derived<r, c> inverse{};
     for (UInteger i = 0U; i < r; ++i) {
       for (UInteger j = 0U; j < c; ++j) {
         inverse(i, j) = cofactor(i, j) / det;
@@ -109,36 +111,43 @@ class Matrix {
     return inverse.T();
   }
 
+  template <UInteger cols2>
+  constexpr friend Derived<rows, cols2> operator*(
+      const Derived<rows, cols>& matrix1, const Derived<cols, cols2>& matrix2) {
+    Derived<rows, cols2> matrix_product{};
+    for (UInteger i = 0U; i < rows; ++i) {
+      for (UInteger j = 0U; j < cols2; ++j) {
+        for (UInteger k = 0U; k < cols; ++k) {
+          matrix_product(i, j) += matrix1(i, k) * matrix2(k, j);
+        }
+      }
+    }
+    return matrix_product;
+  }
+
  private:
   std::array<Decimal, rows * cols> data{};
 };
 
+template <UInteger rows, UInteger cols>
+struct Matrix : public MatrixBase<Matrix, rows, cols> {
+  Matrix(){};
+  constexpr Matrix(const std::array<std::array<Decimal, cols>, rows> matrix)
+      : MatrixBase<Matrix, rows, cols>(matrix) {}
+};
+
 using Matrix4 = Matrix<4U, 4U>;
 
-template <UInteger rows>
-constexpr Matrix<rows, rows> Identity() {
-  Matrix<rows, rows> identity{};
+template <template <UInteger, UInteger> class Derived, UInteger rows>
+constexpr Derived<rows, rows> Identity() {
+  Derived<rows, rows> identity{};
   for (UInteger i = 0U; i < rows; ++i) {
     identity(i, i) = 1.;
   }
   return identity;
 }
+constexpr Matrix4 Identity4() { return Identity<Matrix, 4U>(); }
 
-constexpr Matrix4 Identity4() { return Identity<4U>(); }
-
-template <UInteger rows1, UInteger cols1, UInteger cols2>
-constexpr Matrix<rows1, cols2> operator*(const Matrix<rows1, cols1>& matrix1,
-                                         const Matrix<cols1, cols2>& matrix2) {
-  Matrix<rows1, cols2> matrix_product{};
-  for (UInteger i = 0U; i < rows1; ++i) {
-    for (UInteger j = 0U; j < cols2; ++j) {
-      for (UInteger k = 0U; k < cols1; ++k) {
-        matrix_product(i, j) += matrix1(i, k) * matrix2(k, j);
-      }
-    }
-  }
-  return matrix_product;
-}
 }  // namespace math
 }  // namespace ray_tracer
 

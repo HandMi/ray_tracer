@@ -9,7 +9,7 @@ namespace ray_tracer {
 
 SCENARIO("Matrix and vector multiplication") {
   GIVEN("a matrix and a vector") {
-    const math::Matrix4 A{
+    const Transform A{
         {{{1, 2, 3, 4}, {2, 4, 4, 2}, {8, 6, 4, 1}, {0, 0, 0, 1}}}};
     const Vector b{1, 2, 3};
 

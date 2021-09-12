@@ -1,46 +1,45 @@
 #ifndef CORE_INCLUDE_TUPLE_H
 #define CORE_INCLUDE_TUPLE_H
 
-#include "math/matrix.h"
+#include "transform.h"
 #include "transformations.h"
 #include "utils/types.h"
 #include <array>
 #include <cmath>
 
 namespace ray_tracer {
-template <UInteger size>
+template <UInteger size, class T>
 struct Tuple {
   Tuple() = default;
   constexpr Tuple(std::array<Decimal, size> data) : data(data){};
   constexpr Decimal& operator()(UInteger i) { return data[i]; };
   constexpr Decimal operator()(UInteger i) const { return data[i]; };
 
-  constexpr Tuple& operator*=(const Decimal& a) {
+  constexpr T& operator*=(Decimal a) {
     for (auto& x : data) {
       x *= a;
     }
-    return *this;
+    return static_cast<T&>(*this);
   }
 
-  constexpr Tuple& operator/=(const Decimal& a) {
+  constexpr T& operator/=(Decimal a) {
     for (auto& x : data) {
       x /= a;
     }
-    return *this;
+    return static_cast<T&>(*this);
   }
+
   // Scalar multiplication
-  constexpr friend Tuple operator*(const Decimal& a, const Tuple& b) {
-    Tuple result{b};
+  constexpr friend T operator*(Decimal a, const T& b) {
+    T result{b};
     result *= a;
     return result;
   }
 
-  constexpr friend Tuple operator*(const Tuple& a, const Decimal& b) {
-    return b * a;
-  }
+  constexpr friend T operator*(const T& a, Decimal b) { return b * a; }
 
   // Scalar division
-  constexpr friend Tuple operator/(const Tuple& a, const Decimal& b) {
+  constexpr friend T operator/(const Tuple& a, const Decimal b) {
     Tuple result{a};
     result /= b;
     return result;
@@ -50,41 +49,13 @@ struct Tuple {
   std::array<Decimal, size> data{};
 };
 
-struct Vector : public Tuple<4U>, Transformations<Vector> {
+struct Vector : public Tuple<4U, Vector>, Transformations<Vector, Transform> {
   Vector() = default;
   constexpr Vector(Decimal x, Decimal y, Decimal z) : Tuple({x, y, z, 0.}){};
   constexpr Vector(const Tuple& a) : Tuple(a){};
   constexpr Decimal x() const { return data[0]; };
   constexpr Decimal y() const { return data[1]; };
   constexpr Decimal z() const { return data[2]; };
-
-  constexpr Vector& operator*=(const Decimal& a) {
-    Tuple::operator*=(a);
-    return *this;
-  }
-
-  constexpr Vector& operator/=(const Decimal& a) {
-    Tuple::operator/=(a);
-    return *this;
-  }
-
-  // Scalar multiplication
-  constexpr friend Vector operator*(const Decimal& a, const Vector& b) {
-    Vector result{b};
-    result *= a;
-    return result;
-  }
-
-  constexpr friend Vector operator*(const Vector& a, const Decimal& b) {
-    return b * a;
-  }
-
-  // Scalar division
-  constexpr friend Vector operator/(const Vector& a, const Decimal& b) {
-    Vector result{a};
-    result /= b;
-    return result;
-  }
 
   // Vector Addition
 
@@ -112,13 +83,13 @@ struct Vector : public Tuple<4U>, Transformations<Vector> {
     return *this;
   }
 
-  constexpr Decimal length() const {
+  Decimal length() const {
     return std::sqrt(x() * x() + y() * y() + z() * z());
   }
-  constexpr void normalize() { *this /= length(); }
+  void normalize() { *this /= length(); }
 };
 
-struct Point : Tuple<4U>, Transformations<Point> {
+struct Point : Tuple<4U, Point>, Transformations<Point, Transform> {
   Point() = default;
   constexpr Point(Decimal x, Decimal y, Decimal z) : Tuple({x, y, z, 1.0}){};
   constexpr Point(const Tuple& a) : Tuple(a){};
@@ -159,6 +130,18 @@ constexpr Decimal dot(const Vector& a, const Vector& b) {
 constexpr Vector cross(const Vector& a, const Vector& b) {
   return {a.y() * b.z() - a.z() * b.y(), a.z() * b.x() - a.x() * b.z(),
           a.x() * b.y() - a.y() * b.x()};
+}
+
+// Tuple matrix multiplication
+template <UInteger size, class T>
+constexpr T operator*(const Transform& matrix, const Tuple<size, T>& tuple) {
+  T product{};
+  for (UInteger i = 0U; i < size; ++i) {
+    for (UInteger j = 0U; j < size; ++j) {
+      product(i) += matrix(i, j) * tuple(j);
+    }
+  }
+  return product;
 }
 
 }  // namespace ray_tracer

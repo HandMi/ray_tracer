@@ -4,7 +4,7 @@
 #include <cstdint>
 
 namespace ray_tracer {
-using Decimal = float;
+using Decimal = double;
 using UInteger = std::uint32_t;
 }  // namespace ray_tracer
 
