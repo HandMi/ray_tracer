@@ -22,6 +22,7 @@ add_executable(tuple_tests
                )
 
 target_link_libraries(tuple_tests PRIVATE core Catch2::Catch2WithMain)
+
 catch_discover_tests(canvas_tests)
 catch_discover_tests(transformation_tests)
 catch_discover_tests(tuple_tests)
