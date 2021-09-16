@@ -8,9 +8,10 @@ namespace ray_tracer {
 struct Ray {
   Point origin;
   Vector direction;
-  Ray transform(const Transform& transform) const {
-    return {transform * origin, transform * direction};
-  };
+};
+
+constexpr Ray operator*(const Transform& transform, const Ray& ray) {
+  return {transform * ray.origin, transform * ray.direction};
 };
 
 constexpr Point position(const Ray& ray, Decimal distance) {

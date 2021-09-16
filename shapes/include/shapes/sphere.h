@@ -9,13 +9,18 @@ namespace shapes {
 class Sphere : public Shape {
  private:
   Sphere() = default;
+  Sphere(Transform transformation) { set_transform(transformation); };
 
  public:
   std::optional<const Intersections> intersect(const Ray& ray) const override;
-  static std::shared_ptr<Shape> create();
+  template <typename... T>
+  static std::shared_ptr<Shape> create(T&&... args) {
+    return std::shared_ptr<Shape>(new Sphere(std::forward<T>(args)...));
+  };
+  ;
 };
 
-}  // namespace objects
+}  // namespace shapes
 }  // namespace ray_tracer
 
 #endif
