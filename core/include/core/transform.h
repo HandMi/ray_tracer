@@ -18,7 +18,7 @@ struct TransformBase
 };
 
 template <UInteger rows = 4U, UInteger cols = 4U>
-constexpr TransformBase<rows, cols> Identity() {
+constexpr static TransformBase<rows, cols> Identity() {
   return math::Identity<TransformBase, 4U>();
 }
 

@@ -8,12 +8,13 @@
 #include <cmath>
 
 namespace ray_tracer {
-template <UInteger size, class T>
+template <UInteger length, class T>
 struct Tuple {
   Tuple() = default;
-  constexpr Tuple(std::array<Decimal, size> data) : data(data){};
+  constexpr Tuple(std::array<Decimal, length> data) : data(data){};
   constexpr Decimal& operator()(UInteger i) { return data[i]; };
   constexpr Decimal operator()(UInteger i) const { return data[i]; };
+  static const UInteger size = length;
 
   constexpr T& operator*=(Decimal a) {
     for (auto& x : data) {

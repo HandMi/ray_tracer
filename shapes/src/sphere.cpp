@@ -18,5 +18,14 @@ std::optional<const Intersections> Sphere::intersect(const Ray& ray) const {
                                      {(-b + s) / (2 * a), shared_from_this()}};
   }
 }
+Vector Sphere::normal_at(const Point& point) const {
+  const auto object_point = transformation_inverse * point;
+  const auto object_normal = object_point - Point{0., 0., 0.};
+  auto world_normal = transformation_inverse.T() * object_normal;
+  // This is hacky
+  world_normal(3) = 0.;
+  world_normal.normalize();
+  return world_normal;
+}
 }  // namespace shapes
 }  // namespace ray_tracer

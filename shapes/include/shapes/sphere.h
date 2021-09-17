@@ -13,6 +13,7 @@ class Sphere : public Shape {
 
  public:
   std::optional<const Intersections> intersect(const Ray& ray) const override;
+  Vector normal_at(const Point& point) const override;
   template <typename... T>
   static std::shared_ptr<Shape> create(T&&... args) {
     return std::shared_ptr<Shape>(new Sphere(std::forward<T>(args)...));
