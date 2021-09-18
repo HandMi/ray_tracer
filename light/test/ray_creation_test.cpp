@@ -1,5 +1,5 @@
 
-#include "rays/ray.h"
+#include "light/ray.h"
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 

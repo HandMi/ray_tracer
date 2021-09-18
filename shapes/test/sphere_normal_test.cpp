@@ -12,7 +12,7 @@ SCENARIO("The normal on a sphere at a point on the x axis") {
     const auto sphere = shapes::Sphere::create();
     WHEN("the normal is computed") {
       const auto normal = sphere->normal_at({1, 0, 0});
-      THEN("the valus are correct") {
+      THEN("the values are correct") {
         REQUIRE(ApproxEqual(normal, Vector{1, 0, 0}));
       }
     }
@@ -23,7 +23,7 @@ SCENARIO("The normal on a sphere at a point on the y axis") {
     const auto sphere = shapes::Sphere::create();
     WHEN("the normal is computed") {
       const auto normal = sphere->normal_at({0, 1, 0});
-      THEN("the valus are correct") {
+      THEN("the values are correct") {
         REQUIRE(ApproxEqual(normal, Vector{0, 1, 0}));
       }
     }
@@ -34,7 +34,7 @@ SCENARIO("The normal on a sphere at a point on the z axis") {
     const auto sphere = shapes::Sphere::create();
     WHEN("the normal is computed") {
       const auto normal = sphere->normal_at({0, 0, 1});
-      THEN("the valus are correct") {
+      THEN("the values are correct") {
         REQUIRE(ApproxEqual(normal, Vector{0, 0, 1}));
       }
     }
@@ -46,7 +46,7 @@ SCENARIO("The normal on a sphere at a nonaxial point") {
     WHEN("the normal is computed") {
       const auto normal = sphere->normal_at(
           {std::sqrt(3) / 3, std::sqrt(3) / 3, std::sqrt(3) / 3});
-      THEN("the valus are correct") {
+      THEN("the values are correct") {
         REQUIRE(ApproxEqual(normal, Vector{std::sqrt(3) / 3, std::sqrt(3) / 3,
                                            std::sqrt(3) / 3}));
       }
@@ -60,7 +60,7 @@ SCENARIO("Computing the normal on a translated sphere") {
     sphere->set_transform(transform);
     WHEN("the normal is computed") {
       const auto normal = sphere->normal_at({0, 1.70711, -0.70711});
-      THEN("the valus are correct") {
+      THEN("the values are correct") {
         REQUIRE(ApproxEqual(normal, Vector{0, 0.70711, -0.70711}));
       }
     }
@@ -75,7 +75,7 @@ SCENARIO("Computing the normal on a transformed sphere") {
     WHEN("the normal is computed") {
       const auto normal =
           sphere->normal_at({0, std::sqrt(2) / 2, -std::sqrt(2) / 2});
-      THEN("the valus are correct") {
+      THEN("the values are correct") {
         REQUIRE(ApproxEqual(normal, Vector{0, 0.97014, -0.24254}));
       }
     }

@@ -9,7 +9,9 @@ namespace shapes {
 class Sphere : public Shape {
  private:
   Sphere() = default;
-  Sphere(Transform transformation) { set_transform(transformation); };
+  Sphere(Transform transformation) : Shape(transformation){};
+  Sphere(Transform transformation, std::shared_ptr<Material> material)
+      : Shape(transformation, material){};
 
  public:
   std::optional<const Intersections> intersect(const Ray& ray) const override;

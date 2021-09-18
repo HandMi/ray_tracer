@@ -1,4 +1,4 @@
-#include "rays/ray.h"
+#include "light/ray.h"
 #include "shapes/intersection.h"
 #include "shapes/sphere.h"
 #include <catch2/catch_approx.hpp>

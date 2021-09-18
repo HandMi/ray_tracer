@@ -19,6 +19,7 @@ add_executable(tuple_tests
                tuple/tuple_function_test.cpp
                tuple/tuple_matrix_multiplication_test.cpp
                tuple/tuple_operator_test.cpp
+               tuple/vector_reflection_test.cpp
                )
 
 target_link_libraries(tuple_tests PRIVATE core Catch2::Catch2WithMain)

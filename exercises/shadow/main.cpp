@@ -1,5 +1,5 @@
 #include "core/canvas.h"
-#include "rays/ray.h"
+#include "light/ray.h"
 #include "shapes/sphere.h"
 #include "utils/types.h"
 #include "writer/ppm_writer.h"

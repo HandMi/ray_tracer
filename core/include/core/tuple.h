@@ -133,6 +133,11 @@ constexpr Vector cross(const Vector& a, const Vector& b) {
           a.x() * b.y() - a.y() * b.x()};
 }
 
+// Reflection
+constexpr Vector reflect(const Vector& in, const Vector& normal) {
+  return in - 2. * normal * dot(in, normal);
+}
+
 // Tuple matrix multiplication
 template <UInteger size, class T>
 constexpr T operator*(const Transform& matrix, const Tuple<size, T>& tuple) {
