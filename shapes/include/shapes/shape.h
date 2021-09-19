@@ -30,6 +30,14 @@ class Shape : public std::enable_shared_from_this<Shape> {
   virtual std::optional<const Intersections> intersect(
       const Ray& ray) const = 0;
   virtual Vector normal_at(const Point& point) const = 0;
+
+  // To do: streamline this
+  Color lighting(const Light& light, const Point& reflection_point,
+                 const Vector& eye_vector, const Vector& normal_vector) const {
+    return material->lighting(light, reflection_point, eye_vector,
+                              normal_vector);
+  };
+
   void set_transform(Transform transformation) {
     transformation_inverse = transformation.Inv();
   }
