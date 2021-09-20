@@ -37,11 +37,14 @@ class IntersectionList {
   void insert(const Intersection& intersection) {
     data.push_back(intersection);
   };
-
-  std::optional<Intersection> hit() {
+  void sort() {
     std::sort(
         data.begin(), data.end(),
         [](const Intersection& a, const Intersection& b) { return a.t < b.t; });
+  }
+
+  std::optional<Intersection> hit() {
+    sort();
     const auto hiterator = std::lower_bound(
         data.begin(), data.end(), 0.,
         [](const Intersection& a, Decimal b) { return a.t < b; });
