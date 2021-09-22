@@ -7,7 +7,7 @@
 
 namespace ray_tracer {
 
-struct Light {
+struct PointLight {
   Point position;
   Color intensity;
 };

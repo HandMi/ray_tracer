@@ -23,7 +23,7 @@ int main() {
 
   const Point light_position{-10., 10., -10.};
   const Color light_color{1., 1., 1.};
-  const Light light{light_position, light_color};
+  const PointLight light{light_position, light_color};
   for (int i = 0; i < canvas_size; ++i) {
     for (int j = 0; j < canvas_size; ++j) {
       Decimal x = pixel_size * i - wall_size / 2.;

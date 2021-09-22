@@ -1,9 +1,9 @@
 #ifndef WORLD_INCLUDE_WORLD_H
 #define WORLD_INCLUDE_WORLD_H
 
-#include "light/light.h"
-#include "shapes/shape.h"
+#include "light/point_light.h"
 #include "shapes/intersection.h"
+#include "shapes/shape.h"
 #include <memory>
 #include <vector>
 
@@ -12,15 +12,18 @@ namespace world {
 
 class World {
  private:
-  Light light{};
+  std::vector<PointLight> lights{};
   std::vector<std::shared_ptr<shapes::Shape>> shapes;
 
  public:
-  World() = default;
-  World(const Light& light, const std::vector < std::shared_ptr<shapes::Shape>> & shapes)
-      : light{light}, shapes{shapes}{};
   static World Default();
+  World() = default;
+  World(const std::vector<PointLight>& lights,
+        const std::vector<std::shared_ptr<shapes::Shape>>& shapes)
+      : lights{lights}, shapes{shapes} {};
+
   shapes::IntersectionList intersect(const Ray& ray) const;
+  Color shade(const shapes::Hit& hit) const;
 };
 
 }  // namespace world

@@ -10,7 +10,7 @@ namespace ray_tracer {
 SCENARIO("Lighting with the eye between the light and the surface") {
   GIVEN("Given a default material and and eye position") {
     const auto material = shapes::Material::create();
-    const Light point_light{{0., 0., -10.}, {1., 1., 1.}};
+    const PointLight point_light{{0., 0., -10.}, {1., 1., 1.}};
     const Point position{0., 0., 0.};
     const Vector eye_vector{0., 0., -1.};
     const Vector normal{0., 0., -1.};
@@ -26,7 +26,7 @@ SCENARIO("Lighting with the eye between the light and the surface") {
 SCENARIO("Lighting with the eye between light and surface, eye offset 45°") {
   GIVEN("Given a default material and and eye position") {
     const auto material = shapes::Material::create();
-    const Light point_light{{0., 0., -10.}, {1., 1., 1.}};
+    const PointLight point_light{{0., 0., -10.}, {1., 1., 1.}};
     const Point position{0., 0., 0.};
     const Vector eye_vector{0., std::sqrt(2.)/2., -std::sqrt(2.)/2.};
     const Vector normal{0., 0., -1.};
@@ -42,7 +42,7 @@ SCENARIO("Lighting with the eye between light and surface, eye offset 45°") {
 SCENARIO("Lighting with eye opposite surface, light offset 45°") {
   GIVEN("Given a default material and and eye position") {
     const auto material = shapes::Material::create();
-    const Light point_light{{0., 10., -10.}, {1., 1., 1.}};
+    const PointLight point_light{{0., 10., -10.}, {1., 1., 1.}};
     const Point position{0., 0., 0.};
     const Vector eye_vector{0., 0., -1.};
     const Vector normal{0., 0., -1.};
@@ -58,7 +58,7 @@ SCENARIO("Lighting with eye opposite surface, light offset 45°") {
 SCENARIO("Lighting with eye in the path of the reflection vector") {
   GIVEN("Given a default material and and eye position") {
     const auto material = shapes::Material::create();
-    const Light point_light{{0., 10., -10.}, {1., 1., 1.}};
+    const PointLight point_light{{0., 10., -10.}, {1., 1., 1.}};
     const Point position{0., 0., 0.};
     const Vector eye_vector{0., -std::sqrt(2.) / 2., -std::sqrt(2.) / 2.};
     const Vector normal{0., 0., -1.};

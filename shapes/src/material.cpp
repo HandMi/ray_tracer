@@ -4,7 +4,7 @@
 namespace ray_tracer {
 namespace shapes {
 
-Color Material::lighting(const Light& light, const Point& reflection_point,
+Color Material::lighting(const PointLight& light, const Point& reflection_point,
                          const Vector& eye_vector,
                          const Vector& normal_vector) {
   Color diffuse_color{}, specular_color{}, ambient_color{};

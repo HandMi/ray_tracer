@@ -1,8 +1,9 @@
 #ifndef SHAPES_INCLUDE_INTERSECTION_H
 #define SHAPES_INCLUDE_INTERSECTION_H
 
+#include "core/tuple.h"
+#include "light/ray.h"
 #include "utils/types.h"
-#include <algorithm>
 #include <memory>
 #include <optional>
 #include <vector>
@@ -11,10 +12,19 @@ namespace ray_tracer {
 namespace shapes {
 
 class Shape;
+struct Hit;
 
 struct Intersection {
   Decimal t;
   std::shared_ptr<const Shape> object;
+  Hit prepare_hit(const Ray& ray) const;
+};
+
+struct Hit : public Intersection {
+  bool inside{};
+  Point point{};
+  Vector eye_vector{};
+  Vector normal{};
 };
 
 using Intersections = std::vector<Intersection>;
@@ -29,28 +39,11 @@ class IntersectionList {
       : data(data){};
   Intersection operator[](UInteger i) const { return data[i]; };
   UInteger count() const { return data.size(); };
-  void append(const std::optional<const Intersections>& intersections) {
-    if (intersections.has_value()) {
-      data.insert(data.end(), intersections->begin(), intersections->end());
-    }
-  };
-  void insert(const Intersection& intersection) {
-    data.push_back(intersection);
-  };
-  void sort() {
-    std::sort(
-        data.begin(), data.end(),
-        [](const Intersection& a, const Intersection& b) { return a.t < b.t; });
-  }
+  void append(const std::optional<const Intersections>& intersections);
+  void insert(const Intersection& intersection);
+  void sort();
 
-  std::optional<Intersection> hit() {
-    sort();
-    const auto hiterator = std::lower_bound(
-        data.begin(), data.end(), 0.,
-        [](const Intersection& a, Decimal b) { return a.t < b; });
-    return hiterator != data.end() ? std::optional<Intersection>(*hiterator)
-                                   : std::nullopt;
-  };
+  std::optional<Intersection> hit();
 };
 
 }  // namespace shapes
