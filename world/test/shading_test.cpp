@@ -1,4 +1,3 @@
-
 #include "core/utils.h"
 #include "shapes/sphere.h"
 #include "world/world.h"
@@ -15,7 +14,7 @@ SCENARIO("Shading an intersection") {
     const Ray ray{{0., 0., -5.}, {0., 0., 1.}};
     WHEN("the intersections and hits are computed") {
       auto intersection_list = world.intersect(ray);
-      const auto hit = intersection_list.hit()->prepare_hit(ray);
+      const auto hit = prepare_hit(intersection_list.hit_candidate().value(), ray);
       THEN("the shading is correct") {
         const auto color = world.shade(hit);
         REQUIRE(ApproxEqual(color, Color{0.38066, 0.47583, 0.2855}));
@@ -38,7 +37,7 @@ SCENARIO("Shading an intersection from the inside") {
     const Ray ray{{0., 0., 0.}, {0., 0., 1.}};
     WHEN("the intersections and hits are computed") {
       auto intersection_list = world.intersect(ray);
-      const auto hit = intersection_list.hit()->prepare_hit(ray);
+      const auto hit = prepare_hit(intersection_list.hit_candidate().value(), ray);
       THEN("the shading is correct") {
         const auto color = world.shade(hit);
         REQUIRE(ApproxEqual(color, Color{0.90498, 0.90498, 0.90498}));

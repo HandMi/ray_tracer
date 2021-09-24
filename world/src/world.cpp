@@ -1,4 +1,5 @@
 #include "world/world.h"
+#include "core/color.h"
 #include "core/transform.h"
 #include "shapes/intersection.h"
 #include "shapes/material.h"
@@ -30,15 +31,25 @@ shapes::IntersectionList World::intersect(const Ray& ray) const {
   }
   intersection_list.sort();
   return intersection_list;
-};
+}
 
 Color World::shade(const shapes::Hit& hit) const {
-  return std::accumulate(
-      lights.begin(), lights.end(), Color{},
-      [&hit](const Color& sum, const PointLight& light) {
-        return sum + hit.object->lighting(light, hit.point, hit.eye_vector,
-                                          hit.normal);
-      });
+  return std::accumulate(lights.begin(), lights.end(), Color{},
+                         [&hit](const Color& sum, const PointLight& light) {
+                           return sum + hit.object->lighting(light, hit.point,
+                                                             hit.eye_vector,
+                                                             hit.normal);
+                         });
+}
+
+Color World::color_at(const Ray& ray) const {
+  auto intersection_list = intersect(ray);
+  const auto optional_hit = intersection_list.hit_candidate();
+  if (optional_hit.has_value()) {
+    const auto hit = prepare_hit(optional_hit.value(), ray);
+    return shade(hit);
+  }
+  return Colors::Black;
 }
 }  // namespace world
 }  // namespace ray_tracer

@@ -17,7 +17,7 @@ SCENARIO("The hit, when all intersections have positive t") {
       intersection_list.insert(i1);
       intersection_list.insert(i2);
       THEN("the hit is the lowest nonnegatiove value") {
-        const auto hit = intersection_list.hit();
+        const auto hit = intersection_list.hit_candidate();
         REQUIRE(hit.has_value());
         REQUIRE(hit->t == 1.);
       }
@@ -34,7 +34,7 @@ SCENARIO("The hit, when some intersections have negative t") {
       intersection_list.insert(i1);
       intersection_list.insert(i2);
       THEN("the hit is the lowest nonnegatiove value") {
-        const auto hit = intersection_list.hit();
+        const auto hit = intersection_list.hit_candidate();
         REQUIRE(hit.has_value());
         REQUIRE(hit->t == 1.);
       }
@@ -51,7 +51,7 @@ SCENARIO("The hit, when all intersections have negative t") {
       intersection_list.insert(i1);
       intersection_list.insert(i2);
       THEN("the hit is the lowest nonnegatiove value") {
-        const auto hit = intersection_list.hit();
+        const auto hit = intersection_list.hit_candidate();
         REQUIRE(hit.has_value()==false);
       }
     }
@@ -71,7 +71,7 @@ SCENARIO("The hit is always the lowest nonnegative intersection") {
       intersection_list.insert(i3);
       intersection_list.insert(i4);
       THEN("the hit is the lowest nonnegatiove value") {
-        const auto hit = intersection_list.hit();
+        const auto hit = intersection_list.hit_candidate();
         REQUIRE(hit.has_value());
         REQUIRE(hit->t == 2.);
       }

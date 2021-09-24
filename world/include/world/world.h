@@ -24,6 +24,7 @@ class World {
 
   shapes::IntersectionList intersect(const Ray& ray) const;
   Color shade(const shapes::Hit& hit) const;
+  Color color_at(const Ray& ray) const;
 };
 
 }  // namespace world

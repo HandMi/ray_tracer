@@ -14,9 +14,8 @@ SCENARIO("Precomputing the state of an intersection") {
     const auto sphere = shapes::Sphere::create();
     shapes::Intersection intersect{4., sphere};
     WHEN("the hit is prepared") {
-      const auto hit = intersect.prepare_hit(ray);
+      const auto hit = prepare_hit(intersect, ray);
       THEN("the values are correct") {
-        REQUIRE(hit.t == Approx(intersect.t));
         REQUIRE(ApproxEqual(hit.point, Point{0., 0., -1.}));
         REQUIRE(ApproxEqual(hit.eye_vector, Vector{0., 0., -1.}));
         REQUIRE(ApproxEqual(hit.normal, Vector{0., 0., -1.}));
@@ -31,9 +30,8 @@ SCENARIO("The hit, when an intersection occurs on the outside") {
     const auto sphere = shapes::Sphere::create();
     shapes::Intersection intersect{4., sphere};
     WHEN("the hit is prepared") {
-      const auto hit = intersect.prepare_hit(ray);
+      const auto hit = prepare_hit(intersect, ray);
       THEN("the values are correct") {
-        REQUIRE(hit.t == Approx(intersect.t));
         REQUIRE(hit.inside == false);
       }
     }
@@ -46,9 +44,8 @@ SCENARIO("The hit, when an intersection occurs on the inside") {
     const auto sphere = shapes::Sphere::create();
     shapes::Intersection intersect{1., sphere};
     WHEN("the hit is prepared") {
-      const auto hit = intersect.prepare_hit(ray);
+      const auto hit = prepare_hit(intersect, ray);
       THEN("the values are correct") {
-        REQUIRE(hit.t == Approx(intersect.t));
         REQUIRE(hit.inside == true);
       }
     }

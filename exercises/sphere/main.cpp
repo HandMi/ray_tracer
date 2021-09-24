@@ -34,9 +34,9 @@ int main() {
       const auto intersections = sphere->intersect(ray);
       shapes::IntersectionList intersection_list;
       intersection_list.append(intersections);
-      const auto hit = intersection_list.hit();
+      const auto hit = intersection_list.hit_candidate();
       if (hit.has_value()) {
-        const auto point = position(ray, hit->t);
+        const auto point = ray.position(hit->t);
         const auto normal = hit->object->normal_at(point);
         const auto eye_vector = -ray.direction;
         const auto color =

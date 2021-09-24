@@ -12,19 +12,10 @@ namespace ray_tracer {
 namespace shapes {
 
 class Shape;
-struct Hit;
 
 struct Intersection {
   Decimal t;
   std::shared_ptr<const Shape> object;
-  Hit prepare_hit(const Ray& ray) const;
-};
-
-struct Hit : public Intersection {
-  bool inside{};
-  Point point{};
-  Vector eye_vector{};
-  Vector normal{};
 };
 
 using Intersections = std::vector<Intersection>;
@@ -43,8 +34,18 @@ class IntersectionList {
   void insert(const Intersection& intersection);
   void sort();
 
-  std::optional<Intersection> hit();
+  std::optional<Intersection> hit_candidate();
 };
+
+struct Hit {
+  std::shared_ptr<const Shape> object;
+  bool inside{};
+  Point point{};
+  Vector eye_vector{};
+  Vector normal{};
+};
+
+Hit prepare_hit(const Intersection& intersection, const Ray& ray);
 
 }  // namespace shapes
 }  // namespace ray_tracer

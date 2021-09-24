@@ -13,7 +13,7 @@ SCENARIO("Position test") {
     const Vector direction{1, 0, 0};
     const Ray ray{origin, direction};
     WHEN("a position is calculated") {
-      const auto pos = position(ray, 0.);
+      const auto pos = ray.position(0.);
       THEN("the values are correctly transfered") {
         const Point expected(2., 3., 4.);
         REQUIRE(pos.x() == Approx(expected.x()));
@@ -22,7 +22,7 @@ SCENARIO("Position test") {
       }
     }
     WHEN("a position is calculated") {
-      const auto pos = position(ray, 1.);
+      const auto pos = ray.position(1.);
       THEN("the values are correctly transfered") {
         const Point expected(3., 3., 4.);
         REQUIRE(pos.x() == Approx(expected.x()));
@@ -31,7 +31,7 @@ SCENARIO("Position test") {
       }
     }
     WHEN("a position is calculated") {
-      const auto pos = position(ray, -1.);
+      const auto pos = ray.position(-1.);
       THEN("the values are correctly transfered") {
         const Point expected(1., 3., 4.);
         REQUIRE(pos.x() == Approx(expected.x()));
@@ -40,7 +40,7 @@ SCENARIO("Position test") {
       }
     }
     WHEN("a position is calculated") {
-      const auto pos = position(ray, 2.5);
+      const auto pos = ray.position(2.5);
       THEN("the values are correctly transfered") {
         const Point expected(4.5, 3., 4.);
         REQUIRE(pos.x() == Approx(expected.x()));

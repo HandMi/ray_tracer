@@ -8,6 +8,7 @@ namespace ray_tracer {
 struct Color : Tuple<3U, Color> {
   Color() = default;
   constexpr Color(Decimal r, Decimal g, Decimal b) : Tuple{{r, g, b}} {};
+
   constexpr Decimal r() const { return data[0]; };
   constexpr Decimal g() const { return data[1]; };
   constexpr Decimal b() const { return data[2]; };
@@ -43,6 +44,9 @@ constexpr Color operator*(const Color& a, const Color& b) {
   return {a.r() * b.r(), a.g() * b.g(), a.b() * b.b()};
 }
 
+namespace Colors {
+constexpr Color Black{0., 0., 0.};
+}
 }  // namespace ray_tracer
 
 #endif
