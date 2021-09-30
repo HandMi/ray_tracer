@@ -1,7 +1,7 @@
 #ifndef MATH_INCLUDE_MATRIX_H
 #define MATH_INCLUDE_MATRIX_H
 
-#include "utils/types.h"
+#include "common/types.h"
 #include <array>
 
 namespace ray_tracer {
@@ -20,6 +20,8 @@ class MatrixBase {
       }
     }
   }
+  static constexpr UInteger get_rows() { return rows; }
+  static constexpr UInteger get_cols() { return cols; }
 
   constexpr Decimal& operator()(UInteger i, UInteger j) {
     return data[i * cols + j];

@@ -1,7 +1,7 @@
 #ifndef CORE_INCLUDE_TRANSFORMATIONS_H
 #define CORE_INCLUDE_TRANSFORMATIONS_H
 
-#include "utils/constants.h"
+#include "common/constants.h"
 #include <array>
 #include <cmath>
 

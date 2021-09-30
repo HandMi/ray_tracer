@@ -3,7 +3,7 @@
 
 #include "transform.h"
 #include "transformations.h"
-#include "utils/types.h"
+#include "common/types.h"
 #include <array>
 #include <cmath>
 
@@ -84,10 +84,10 @@ struct Vector : public Tuple<4U, Vector>, Transformations<Vector, Transform> {
     return *this;
   }
 
-  Decimal length() const {
+  constexpr Decimal length() const {
     return std::sqrt(x() * x() + y() * y() + z() * z());
   }
-  void normalize() { *this /= length(); }
+  constexpr void normalize() { *this /= length(); }
 };
 
 struct Point : Tuple<4U, Point>, Transformations<Point, Transform> {

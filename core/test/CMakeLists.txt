@@ -11,8 +11,9 @@ add_executable(transformation_tests
                transformations/tuple_rotation_test.cpp
                transformations/tuple_scaling_test.cpp
                transformations/tuple_translation_test.cpp
+               transformations/view_transform_test.cpp
                )
-target_link_libraries(transformation_tests PRIVATE core Catch2::Catch2WithMain)
+target_link_libraries(transformation_tests PRIVATE core utils Catch2::Catch2WithMain)
 
 add_executable(tuple_tests
                tuple/color_operator_test.cpp

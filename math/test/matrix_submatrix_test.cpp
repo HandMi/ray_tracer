@@ -1,6 +1,6 @@
 
 #include "math/matrix.h"
-#include "include/matrix_test_helper.h"
+#include "utils/matrix_test_helper.h"
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 

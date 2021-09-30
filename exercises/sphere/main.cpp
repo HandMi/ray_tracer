@@ -3,7 +3,7 @@
 #include "shapes/intersection.h"
 #include "shapes/material.h"
 #include "shapes/sphere.h"
-#include "utils/types.h"
+#include "common/types.h"
 #include "writer/ppm_writer.h"
 #include <fstream>
 #include <iostream>

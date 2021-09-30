@@ -1,5 +1,5 @@
-#ifndef UTILS_INCLUDE_TYPES_H
-#define UTILS_INCLUDE_TYPES_H
+#ifndef COMMON_INCLUDE_TYPES_H
+#define COMMON_INCLUDE_TYPES_H
 
 #include <cstdint>
 

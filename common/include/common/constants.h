@@ -1,5 +1,5 @@
-#ifndef UTILS_INCLUDE_CONSTANTS_H
-#define UTILS_INCLUDE_CONSTANTS_H
+#ifndef COMMON_INCLUDE_CONSTANTS_H
+#define COMMON_INCLUDE_CONSTANTS_H
 
 #include "types.h"
 #include <math.h>

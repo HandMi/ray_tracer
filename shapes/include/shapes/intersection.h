@@ -3,7 +3,7 @@
 
 #include "core/tuple.h"
 #include "light/ray.h"
-#include "utils/types.h"
+#include "common/types.h"
 #include <memory>
 #include <optional>
 #include <vector>
