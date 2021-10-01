@@ -1,4 +1,4 @@
-#include "core/utils.h"
+#include "utils/tuple_test_helper.h"
 #include "shapes/sphere.h"
 #include "world/world.h"
 #include <catch2/catch_approx.hpp>
@@ -10,7 +10,7 @@ namespace ray_tracer {
 
 SCENARIO("Shading an intersection") {
   GIVEN("a world and a ray") {
-    auto world = world::World::Default();
+    auto world = World::Default();
     const Ray ray{{0., 0., -5.}, {0., 0., 1.}};
     WHEN("the intersections and hits are computed") {
       auto intersection_list = world.intersect(ray);
@@ -32,7 +32,7 @@ SCENARIO("Shading an intersection from the inside") {
     const auto s1 = shapes::Sphere::create(Identity(), mat);
     const auto s2 = shapes::Sphere::create(transform);
     const auto light = PointLight{{0., 0.25, 0.}, {1., 1., 1.}};
-    world::World world{{light}, {s1, s2}};
+    World world{{light}, {s1, s2}};
 
     const Ray ray{{0., 0., 0.}, {0., 0., 1.}};
     WHEN("the intersections and hits are computed") {

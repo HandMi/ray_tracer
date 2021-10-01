@@ -7,4 +7,4 @@ add_executable(world_tests
                test/world_coloring_test.cpp
                test/world_intersection_test.cpp
                )
-target_link_libraries(world_tests PRIVATE world Catch2::Catch2WithMain)
+target_link_libraries(world_tests PRIVATE world utils Catch2::Catch2WithMain)

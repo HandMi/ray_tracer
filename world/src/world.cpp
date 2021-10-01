@@ -7,7 +7,6 @@
 #include <numeric>
 
 namespace ray_tracer {
-namespace world {
 
 World World::Default() {
   auto mat = shapes::Material::create(Color{0.8, 1.0, 0.6});
@@ -51,5 +50,4 @@ Color World::color_at(const Ray& ray) const {
   }
   return Colors::Black;
 }
-}  // namespace world
 }  // namespace ray_tracer

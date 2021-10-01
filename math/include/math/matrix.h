@@ -98,7 +98,7 @@ class MatrixBase {
   }
 
   template <UInteger r = rows, UInteger c = cols>
-  typename std::enable_if<(r == c), Derived<r, c>>::type Inv() const {
+  constexpr typename std::enable_if<(r == c), Derived<r, c>>::type Inv() const {
     constexpr Decimal EPSILON = 1e-07;
     auto det = determinant();
     if (std::abs(det) < EPSILON) {

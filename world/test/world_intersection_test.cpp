@@ -8,7 +8,7 @@ namespace ray_tracer {
 
 SCENARIO("Intersect a world with a ray") {
   GIVEN("a world and a ray") {
-    auto world = world::World::Default();
+    auto world = World::Default();
     const Ray ray{{0., 0., -5.}, {0., 0., 1.}};
     WHEN("the intersections are computed") {
       const auto intersection_list = world.intersect(ray);

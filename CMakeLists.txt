@@ -9,6 +9,7 @@ find_package(Catch2 REQUIRED)
 include(CTest)
 include(Catch)
 
+add_subdirectory(camera)
 add_subdirectory(common)
 add_subdirectory(core)
 add_subdirectory(exercises)

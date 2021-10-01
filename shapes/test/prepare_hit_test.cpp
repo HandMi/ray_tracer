@@ -1,4 +1,4 @@
-#include "core/utils.h"
+#include "utils/tuple_test_helper.h"
 #include "shapes/intersection.h"
 #include "shapes/sphere.h"
 #include <catch2/catch_approx.hpp>

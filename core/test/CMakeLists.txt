@@ -23,7 +23,7 @@ add_executable(tuple_tests
                tuple/vector_reflection_test.cpp
                )
 
-target_link_libraries(tuple_tests PRIVATE core Catch2::Catch2WithMain)
+target_link_libraries(tuple_tests PRIVATE core utils Catch2::Catch2WithMain)
 
 catch_discover_tests(canvas_tests)
 catch_discover_tests(transformation_tests)

@@ -1,7 +1,8 @@
-#ifndef CORE_INCLUDE_UTILS_H
-#define CORE_INCLUDE_UTILS_H
 
-#include "tuple.h"
+#ifndef UTILS_INCLUDE_TUPLE_TEST_HELPER_H
+#define UTILS_INCLUDE_TUPLE_TEST_HELPER_H
+
+#include "core/tuple.h"
 #include <cmath>
 #include <iostream>
 
@@ -19,6 +20,7 @@ bool ApproxEqual(const TupleType& tuple1,
   }
   return true;
 }
+
 
 }  // namespace ray_tracer
 

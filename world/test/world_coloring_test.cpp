@@ -1,4 +1,4 @@
-#include "core/utils.h"
+#include "utils/tuple_test_helper.h"
 #include "shapes/sphere.h"
 #include "world/world.h"
 #include <catch2/catch_approx.hpp>
@@ -10,7 +10,7 @@ namespace ray_tracer {
 
 SCENARIO("The color when a ray misses") {
   GIVEN("a world and a ray that misses") {
-    auto world = world::World::Default();
+    auto world = World::Default();
     const Ray ray{{0., 0., -5.}, {0., 1., 0.}};
     WHEN("the color is computed") {
       const auto color = world.color_at(ray);
@@ -20,7 +20,7 @@ SCENARIO("The color when a ray misses") {
 }
 SCENARIO("The color when a ray hits") {
   GIVEN("a world and a ray that hits") {
-    auto world = world::World::Default();
+    auto world = World::Default();
     const Ray ray{{0., 0., -5.}, {0., 0., 1.}};
     WHEN("the color is computed") {
       const auto color = world.color_at(ray);
@@ -45,7 +45,7 @@ SCENARIO("The color with an intersection behind the ray") {
     const auto light = PointLight{{-10., 10., -10.}, {1., 1., 1.}};
     std::vector<PointLight> lights{light};
 
-    world::World world(lights, {s1, s2});
+    World world(lights, {s1, s2});
     const Ray ray{{0., 0., 0.75}, {0., 0., -1.}};
 
     WHEN("the color is computed") {

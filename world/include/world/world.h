@@ -8,7 +8,6 @@
 #include <vector>
 
 namespace ray_tracer {
-namespace world {
 
 class World {
  private:
@@ -27,7 +26,6 @@ class World {
   Color color_at(const Ray& ray) const;
 };
 
-}  // namespace world
 }  // namespace ray_tracer
 
 #endif
