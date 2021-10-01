@@ -1,4 +1,5 @@
 add_subdirectory(clock)
+add_subdirectory(first_scene)
 add_subdirectory(projectile)
 add_subdirectory(shadow)
 add_subdirectory(sphere)
