@@ -1,6 +1,7 @@
 #include "world/world.h"
 #include "core/color.h"
 #include "core/transform.h"
+#include "light/point_light.h"
 #include "shapes/intersection.h"
 #include "shapes/material.h"
 #include "shapes/sphere.h"
@@ -34,10 +35,11 @@ shapes::IntersectionList World::intersect(const Ray& ray) const {
 
 Color World::shade(const shapes::Hit& hit) const {
   return std::accumulate(lights.begin(), lights.end(), Color{},
-                         [&hit](const Color& sum, const PointLight& light) {
-                           return sum + hit.object->lighting(light, hit.point,
-                                                             hit.eye_vector,
-                                                             hit.normal);
+                         [&](const Color& sum, const PointLight& light) {
+                           return sum + hit.object->lighting(
+                                            light, hit.point, hit.eye_vector,
+                                            hit.normal,
+                                            is_shadowed(hit.over_point, light));
                          });
 }
 
@@ -49,5 +51,18 @@ Color World::color_at(const Ray& ray) const {
     return shade(hit);
   }
   return Colors::Black;
+}
+
+bool World::is_shadowed(const Point& point, const PointLight& light) const {
+  auto v = light.position - point;
+  const auto distance = v.length();
+  v.normalize();
+  const auto ray = Ray{point, v};
+  auto intersection_list = intersect(ray);
+  const auto opt_hit = intersection_list.hit_candidate();
+  if (opt_hit.has_value() && opt_hit->t < distance) {
+    return true;
+  }
+  return false;
 }
 }  // namespace ray_tracer

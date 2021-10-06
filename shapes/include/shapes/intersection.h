@@ -41,6 +41,7 @@ struct Hit {
   std::shared_ptr<const Shape> object;
   bool inside{};
   Point point{};
+  Point over_point{};
   Vector eye_vector{};
   Vector normal{};
 };

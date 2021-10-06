@@ -44,6 +44,7 @@ Hit prepare_hit(const Intersection& intersection, const Ray& ray) {
   } else {
     hit.inside = false;
   }
+  hit.over_point = hit.point + hit.normal * EPSILON;
   return hit;
 }
 }  // namespace shapes

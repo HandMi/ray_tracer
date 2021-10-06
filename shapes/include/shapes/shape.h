@@ -33,9 +33,10 @@ class Shape : public std::enable_shared_from_this<Shape> {
 
   // To do: streamline this
   Color lighting(const PointLight& light, const Point& reflection_point,
-                 const Vector& eye_vector, const Vector& normal_vector) const {
+                 const Vector& eye_vector, const Vector& normal_vector,
+                 bool in_shadow = false) const {
     return material->lighting(light, reflection_point, eye_vector,
-                              normal_vector);
+                              normal_vector, in_shadow);
   };
 
   void set_transform(Transform transformation) {

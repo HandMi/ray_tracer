@@ -50,9 +50,10 @@ int main() {
       Identity().scale(.33, .33, .33).translate(-1.5, 0.33, -0.75),
       left_material)};
 
-  PointLight light{Point(-10., 10., -10.), Color(1., 1., 1.)};
+  PointLight light1{Point(-10., 10., -10.), Color(0.5, 0.5, 0.5)};
+  PointLight light2{Point(5., 10., -10.), Color(0.4, 0.4, 0.4)};
 
-  World world({light}, {floor, left_wall, right_wall, right_sphere,
+  World world({light1,light2}, {floor, left_wall, right_wall, right_sphere,
                         middle_sphere, left_sphere});
 
   Camera camera(1000, 500, PI / 3);

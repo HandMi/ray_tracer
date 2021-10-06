@@ -1,6 +1,7 @@
-#include "utils/tuple_test_helper.h"
+#include "core/transform.h"
 #include "shapes/intersection.h"
 #include "shapes/sphere.h"
+#include "utils/tuple_test_helper.h"
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
@@ -31,9 +32,7 @@ SCENARIO("The hit, when an intersection occurs on the outside") {
     shapes::Intersection intersect{4., sphere};
     WHEN("the hit is prepared") {
       const auto hit = prepare_hit(intersect, ray);
-      THEN("the values are correct") {
-        REQUIRE(hit.inside == false);
-      }
+      THEN("the values are correct") { REQUIRE(hit.inside == false); }
     }
   }
 }
@@ -45,8 +44,22 @@ SCENARIO("The hit, when an intersection occurs on the inside") {
     shapes::Intersection intersect{1., sphere};
     WHEN("the hit is prepared") {
       const auto hit = prepare_hit(intersect, ray);
-      THEN("the values are correct") {
-        REQUIRE(hit.inside == true);
+      THEN("the values are correct") { REQUIRE(hit.inside == true); }
+    }
+  }
+}
+
+SCENARIO("The hit should offset the point") {
+  GIVEN("a ray, a sphere and an intersection") {
+    Ray ray{{0., 0., -5.}, {0., 0., 1.}};
+    const auto transform = Identity().translate(0., 0., 1.);
+    const auto sphere = shapes::Sphere::create(transform);
+    shapes::Intersection intersect{5., sphere};
+    WHEN("the hit is prepared") {
+      const auto hit = prepare_hit(intersect, ray);
+      THEN("the offset point is on the correct side") {
+        REQUIRE(hit.over_point.z() < -EPSILON / 2.);
+        REQUIRE(hit.point.z() > hit.over_point.z());
       }
     }
   }
