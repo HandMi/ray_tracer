@@ -31,10 +31,10 @@ SCENARIO("Shading an intersection from the inside") {
     mat->specular = 0.2;
     const auto transform = Identity().scale(0.5, 0.5, 0.5);
 
-    const auto s1 = shapes::Sphere::create(Identity(), mat);
-    const auto s2 = shapes::Sphere::create(transform);
-    const auto light = PointLight{{0., 0.25, 0.}, {1., 1., 1.}};
-    World world{{light}, {s1, s2}};
+    World world{};
+    world.addShape<shapes::Sphere>(Identity(), mat);
+    world.addShape<shapes::Sphere>(transform);
+    world.addLight<PointLight>(Point{0., 0.25, 0.}, Color{1., 1., 1.});
 
     const Ray ray{{0., 0., 0.}, {0., 0., 1.}};
     WHEN("the intersections and hits are computed") {
@@ -53,10 +53,11 @@ SCENARIO("Shading an intersection in shadow") {
   GIVEN("a world and a ray") {
     const auto transform = Identity().translate(0, 0, 10);
 
-    const auto s1 = shapes::Sphere::create();
+    World world{};
     const auto s2 = shapes::Sphere::create(transform);
-    const auto light = PointLight{{0., 0., -10.}, {1., 1., 1.}};
-    World world{{light}, {s1, s2}};
+    world.addShape<shapes::Sphere>();
+    world.addShape<shapes::Sphere>(transform);
+    world.addLight<PointLight>(Point{0., 0., -10.}, Color{1., 1., 1.});
 
     const Ray ray{{0., 0., 5.}, {0., 0., 1.}};
     WHEN("the intersections and hits are computed") {

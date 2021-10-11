@@ -17,10 +17,12 @@ World World::Default() {
 
   const auto s1 = shapes::Sphere::create(Identity(), mat);
   const auto s2 = shapes::Sphere::create(transform);
-  const auto light = PointLight{{-10., 10., -10.}, {1., 1., 1.}};
-  std::vector<PointLight> lights{light};
+  auto light =
+      std::make_unique<PointLight>(Point{-10., 10., -10.}, Color{1., 1., 1.});
+  LightList light_list;
+  light_list.push_back(std::move(light));
 
-  return World(lights, {s1, s2});
+  return World(std::move(light_list), {s1, s2});
 }
 
 shapes::IntersectionList World::intersect(const Ray& ray) const {
@@ -34,13 +36,14 @@ shapes::IntersectionList World::intersect(const Ray& ray) const {
 }
 
 Color World::shade(const shapes::Hit& hit) const {
-  return std::accumulate(lights.begin(), lights.end(), Color{},
-                         [&](const Color& sum, const PointLight& light) {
-                           return sum + hit.object->lighting(
-                                            light, hit.point, hit.eye_vector,
-                                            hit.normal,
-                                            is_shadowed(hit.over_point, light));
-                         });
+  return std::accumulate(
+      lights.begin(), lights.end(), Color{},
+      [&](const Color& sum, const auto& light) {
+        return sum +
+               light->lighting(hit.object->get_material(), hit.point,
+                               hit.eye_vector, hit.normal,
+                               light->intensity_at(*this, hit.over_point));
+      });
 }
 
 Color World::color_at(const Ray& ray) const {
@@ -53,8 +56,8 @@ Color World::color_at(const Ray& ray) const {
   return Colors::Black;
 }
 
-bool World::is_shadowed(const Point& point, const PointLight& light) const {
-  auto v = light.position - point;
+bool World::is_shadowed(const Point& point, const Point& light_position) const {
+  auto v = light_position - point;
   const auto distance = v.length();
   v.normalize();
   const auto ray = Ray{point, v};

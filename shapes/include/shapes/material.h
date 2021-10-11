@@ -4,7 +4,6 @@
 #include "core/color.h"
 #include "core/transform.h"
 #include "core/tuple.h"
-#include "light/point_light.h"
 #include <memory>
 #include <optional>
 
@@ -21,8 +20,6 @@ class Material : public std::enable_shared_from_this<Material> {
   static std::shared_ptr<Material> create(T&&... args) {
     return std::shared_ptr<Material>(new Material(std::forward<T>(args)...));
   }
-  Color lighting(const PointLight& light, const Point& reflection_point,
-                 const Vector& eye_vector, const Vector& normal_vector, bool in_shadow = false);
   Color color{1., 1., 1.};
   Decimal ambient{0.1};
   Decimal diffuse{0.9};

@@ -55,9 +55,8 @@ SCENARIO("The normal on a sphere at a nonaxial point") {
 }
 SCENARIO("Computing the normal on a translated sphere") {
   GIVEN("a translated unit sphere") {
-    const auto sphere = shapes::Sphere::create();
     const Transform transform = Identity().translate(0., 1., 0.);
-    sphere->set_transform(transform);
+    const auto sphere = shapes::Sphere::create(transform);
     WHEN("the normal is computed") {
       const auto normal = sphere->normal_at({0, 1.70711, -0.70711});
       THEN("the values are correct") {
@@ -68,10 +67,9 @@ SCENARIO("Computing the normal on a translated sphere") {
 }
 SCENARIO("Computing the normal on a transformed sphere") {
   GIVEN("a scaled and rotated unit sphere") {
-    const auto sphere = shapes::Sphere::create();
     const Transform transform =
         Identity().rotate_z(PI / 5).scale(1., 0.5, 1.);
-    sphere->set_transform(transform);
+    const auto sphere = shapes::Sphere::create(transform);
     WHEN("the normal is computed") {
       const auto normal =
           sphere->normal_at({0, std::sqrt(2) / 2, -std::sqrt(2) / 2});

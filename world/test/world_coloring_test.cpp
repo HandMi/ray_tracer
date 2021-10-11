@@ -1,5 +1,5 @@
-#include "utils/tuple_test_helper.h"
 #include "shapes/sphere.h"
+#include "utils/tuple_test_helper.h"
 #include "world/world.h"
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
@@ -40,12 +40,12 @@ SCENARIO("The color with an intersection behind the ray") {
     mat2->ambient = 1.0;
     const auto transform = Identity().scale(0.5, 0.5, 0.5);
 
-    const auto s1 = shapes::Sphere::create(Identity(), mat1);
-    const auto s2 = shapes::Sphere::create(transform, mat2);
-    const auto light = PointLight{{-10., 10., -10.}, {1., 1., 1.}};
-    std::vector<PointLight> lights{light};
+    World world{};
 
-    World world(lights, {s1, s2});
+    world.addLight<PointLight>(Point{-10., 10., -10.}, Color{1., 1., 1.});
+    world.addShape<shapes::Sphere>(Identity(), mat1);
+    world.addShape<shapes::Sphere>(transform, mat2);
+
     const Ray ray{{0., 0., 0.75}, {0., 0., -1.}};
 
     WHEN("the color is computed") {

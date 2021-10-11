@@ -10,9 +10,8 @@ namespace ray_tracer {
 
 SCENARIO("Intersecting a scaled sphere with a ray") {
   GIVEN("a scaled sphere and a ray") {
-    const auto sphere = shapes::Sphere::create();
     const Transform transform = Identity().scale(2., 2., 2.);
-    sphere->set_transform(transform);
+    const auto sphere = shapes::Sphere::create(transform);
     Ray ray{{0., 0., -5.}, {0., 0., 1.}};
     WHEN("the intersection is computed") {
       const auto intersect = sphere->intersect(ray);
@@ -26,9 +25,8 @@ SCENARIO("Intersecting a scaled sphere with a ray") {
 }
 SCENARIO("Intersecting a translated sphere with a ray") {
   GIVEN("a translated sphere and a ray") {
-    const auto sphere = shapes::Sphere::create();
     const Transform transform = Identity().translate(5., 0., 0.);
-    sphere->set_transform(transform);
+    const auto sphere = shapes::Sphere::create(transform);
     Ray ray{{0., 0., -5.}, {0., 0., 1.}};
     WHEN("the intersection is computed") {
       const auto intersect = sphere->intersect(ray);

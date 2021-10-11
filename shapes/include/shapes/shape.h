@@ -18,33 +18,18 @@ using Intersections = std::vector<Intersection>;
 class Shape : public std::enable_shared_from_this<Shape> {
  protected:
   Shape() = default;
-  Shape(Transform transformation) { set_transform(transformation); };
   Shape(Transform transformation, std::shared_ptr<Material> material)
-      : material{material} {
-    set_transform(transformation);
-  };
-  Transform transformation_inverse{Identity()};
-  std::shared_ptr<Material> material{Material::create()};
+      : transformation_inverse{transformation.Inv()}, material{material} {};
+  Shape(Transform transformation) : Shape(transformation, Material::create()){};
+  const Transform transformation_inverse{Identity()};
+  std::shared_ptr<const Material> material{Material::create()};
 
  public:
   virtual std::optional<const Intersections> intersect(
       const Ray& ray) const = 0;
   virtual Vector normal_at(const Point& point) const = 0;
 
-  // To do: streamline this
-  Color lighting(const PointLight& light, const Point& reflection_point,
-                 const Vector& eye_vector, const Vector& normal_vector,
-                 bool in_shadow = false) const {
-    return material->lighting(light, reflection_point, eye_vector,
-                              normal_vector, in_shadow);
-  };
-
-  void set_transform(Transform transformation) {
-    transformation_inverse = transformation.Inv();
-  }
-  void set_material(std::shared_ptr<Material> new_material) {
-    material = new_material;
-  }
+  std::shared_ptr<const Material> get_material() const { return material; }
 };
 
 }  // namespace shapes

@@ -1,7 +1,8 @@
 #include "camera/camera.h"
+#include "common/types.h"
 #include "core/canvas.h"
 #include "core/view_transform.h"
-#include "light/point_light.h"
+#include "light/square_light.h"
 #include "shapes/material.h"
 #include "shapes/sphere.h"
 #include "world/world.h"
@@ -52,8 +53,12 @@ int main() {
       Identity().scale(.33, .33, .33).translate(-1.5, 0.33, -0.75),
       left_material);
 
-  world.addLight<PointLight>(Point(-10., 10., -10.), Color(0.5, 0.5, 0.5));
-  world.addLight<PointLight>(Point(5., 10., -10.), Color(0.4, 0.4, 0.4));
+  const Vector u{0.5, 0., 0.};
+  const Vector v{0.5, 0., 0.};
+  const UInteger u_steps{8};
+  const UInteger v_steps{8};
+  world.addLight<SquareLight>(Point(-10., 10., -10.), Color(1., 1., 1.), u,
+                              u_steps, v, v_steps);
 
   Camera camera(1000, 500, PI / 3);
   camera.set_transform(view_transform(Point(0., 1.5, -5.), Point(0., 1., 0.),
@@ -61,7 +66,7 @@ int main() {
   const auto canvas = camera.render(world);
   writer::PPMWriter writer{};
   std::ofstream file_stream;
-  file_stream.open("first_scene.ppm");
+  file_stream.open("soft_shadow_scene.ppm");
   writer.printCanvas(canvas, file_stream);
   file_stream.close();
   return 0;
