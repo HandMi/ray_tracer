@@ -1,5 +1,5 @@
-#ifndef RAYS_INCLUDE_LIGHT_H
-#define RAYS_INCLUDE_LIGHT_H
+#ifndef RAYS_INCLUDE_I_LIGHT_H
+#define RAYS_INCLUDE_I_LIGHT_H
 
 #include "core/color.h"
 #include "core/tuple.h"
@@ -10,10 +10,10 @@ namespace ray_tracer {
 
 class World;
 
-class Light {
+class ILight {
  protected:
-  Light() = default;
-  Light(const Point& point, const Color& color)
+  ILight() = default;
+  ILight(const Point& point, const Color& color)
       : position{point}, color{color} {};
 
  public:

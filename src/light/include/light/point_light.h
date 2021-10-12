@@ -2,14 +2,14 @@
 #define RAYS_INCLUDE_POINT_LIGHT_H
 
 #include "core/color.h"
-#include "light.h"
+#include "i_light.h"
 #include <memory>
 
 namespace ray_tracer {
 
-class PointLight : public Light {
+class PointLight : public ILight {
  public:
-  PointLight(const Point& point, const Color& color) : Light{point, color} {};
+  PointLight(const Point& point, const Color& color) : ILight{point, color} {};
   Decimal intensity_at(const World& world, const Point& point) const override;
   Color lighting(const std::shared_ptr<const shapes::Material> material,
                  const Point& reflection_point, const Vector& eye_vector,

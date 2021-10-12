@@ -1,3 +1,4 @@
+#include "light/point_light.h"
 #include "shapes/sphere.h"
 #include "utils/tuple_test_helper.h"
 #include "world/world.h"

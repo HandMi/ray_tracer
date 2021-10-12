@@ -1,9 +1,9 @@
 #ifndef WORLD_INCLUDE_WORLD_H
 #define WORLD_INCLUDE_WORLD_H
 
-#include "light/point_light.h"
+#include "light/i_light.h"
+#include "shapes/i_shape.h"
 #include "shapes/intersection.h"
-#include "shapes/shape.h"
 #include <memory>
 #include <vector>
 
@@ -11,8 +11,8 @@ namespace ray_tracer {
 
 class World {
  private:
-  using LightList = std::vector<std::unique_ptr<const Light>>;
-  using ShapeList = std::vector<std::shared_ptr<const shapes::Shape>>;
+  using LightList = std::vector<std::unique_ptr<const ILight>>;
+  using ShapeList = std::vector<std::shared_ptr<const shapes::IShape>>;
   LightList lights{};
   ShapeList shapes{};
 

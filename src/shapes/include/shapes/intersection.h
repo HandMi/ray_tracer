@@ -1,9 +1,9 @@
 #ifndef SHAPES_INCLUDE_INTERSECTION_H
 #define SHAPES_INCLUDE_INTERSECTION_H
 
+#include "common/types.h"
 #include "core/tuple.h"
 #include "light/ray.h"
-#include "common/types.h"
 #include <memory>
 #include <optional>
 #include <vector>
@@ -11,11 +11,11 @@
 namespace ray_tracer {
 namespace shapes {
 
-class Shape;
+class IShape;
 
 struct Intersection {
   Decimal t;
-  std::shared_ptr<const Shape> object;
+  std::shared_ptr<const IShape> object;
 };
 
 using Intersections = std::vector<Intersection>;
@@ -38,7 +38,7 @@ class IntersectionList {
 };
 
 struct Hit {
-  std::shared_ptr<const Shape> object;
+  std::shared_ptr<const IShape> object;
   bool inside{};
   Point point{};
   Point over_point{};

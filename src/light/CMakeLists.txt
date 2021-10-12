@@ -1,4 +1,4 @@
-add_library(light STATIC src/light.cpp src/point_light.cpp src/square_light.cpp)
+add_library(light STATIC src/point_light.cpp src/square_light.cpp)
 target_include_directories(light PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
 target_link_libraries(light PUBLIC core shapes world)
 

@@ -1,6 +1,6 @@
 #include "shapes/intersection.h"
 #include "light/ray.h"
-#include "shapes/shape.h"
+#include "shapes/i_shape.h"
 #include <algorithm>
 
 namespace ray_tracer {

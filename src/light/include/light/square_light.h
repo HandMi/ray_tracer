@@ -3,20 +3,20 @@
 
 #include "common/types.h"
 #include "core/color.h"
-#include "light.h"
+#include "i_light.h"
 #include <memory>
 #include <random>
 
 namespace ray_tracer {
 
-class SquareLight : public Light {
+class SquareLight : public ILight {
  private:
   Point point_on_light(UInteger u, UInteger v) const;
 
  public:
   SquareLight(const Point& point, const Color& color, const Vector& u_vector,
               UInteger u_steps, const Vector& v_vector, UInteger v_steps)
-      : Light{point, color},
+      : ILight{point, color},
         u_vector{u_vector},
         u_steps{u_steps},
         v_vector{v_vector},

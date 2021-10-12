@@ -1,5 +1,5 @@
-#ifndef SHAPES_INCLUDE_SHAPE_H
-#define SHAPES_INCLUDE_SHAPE_H
+#ifndef SHAPES_INCLUDE_I_SHAPE_H
+#define SHAPES_INCLUDE_I_SHAPE_H
 
 #include "core/transform.h"
 #include "core/tuple.h"
@@ -15,12 +15,13 @@ class Intersection;
 
 using Intersections = std::vector<Intersection>;
 
-class Shape : public std::enable_shared_from_this<Shape> {
+class IShape : public std::enable_shared_from_this<IShape> {
  protected:
-  Shape() = default;
-  Shape(Transform transformation, std::shared_ptr<Material> material)
+  IShape() = default;
+  IShape(Transform transformation, std::shared_ptr<Material> material)
       : transformation_inverse{transformation.Inv()}, material{material} {};
-  Shape(Transform transformation) : Shape(transformation, Material::create()){};
+  IShape(Transform transformation)
+      : IShape(transformation, Material::create()){};
   const Transform transformation_inverse{Identity()};
   std::shared_ptr<const Material> material{Material::create()};
 
