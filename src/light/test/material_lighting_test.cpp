@@ -9,7 +9,7 @@ using namespace Catch;
 namespace ray_tracer {
 
 SCENARIO("Lighting with the eye between the light and the surface") {
-  GIVEN("Given a default material and and eye position") {
+  GIVEN("a default material and and eye position") {
     const auto material = shapes::Material::create();
     const PointLight point_light{Point{0., 0., -10.}, Color{1., 1., 1.}};
     const Point position{0., 0., 0.};
@@ -25,7 +25,7 @@ SCENARIO("Lighting with the eye between the light and the surface") {
   }
 }
 SCENARIO("Lighting with the surface in shadow") {
-  GIVEN("Given a default material and and eye position") {
+  GIVEN("a default material and and eye position") {
     const auto material = shapes::Material::create();
     const PointLight point_light{Point{0., 0., -10.}, Color{1., 1., 1.}};
     const Point position{0., 0., 0.};
@@ -41,7 +41,7 @@ SCENARIO("Lighting with the surface in shadow") {
   }
 }
 SCENARIO("Lighting with the eye between light and surface, eye offset 45°") {
-  GIVEN("Given a default material and and eye position") {
+  GIVEN("a default material and and eye position") {
     const auto material = shapes::Material::create();
     const PointLight point_light{Point{0., 0., -10.}, Color{1., 1., 1.}};
     const Point position{0., 0., 0.};
@@ -57,7 +57,7 @@ SCENARIO("Lighting with the eye between light and surface, eye offset 45°") {
   }
 }
 SCENARIO("Lighting with eye opposite surface, light offset 45°") {
-  GIVEN("Given a default material and and eye position") {
+  GIVEN("a default material and and eye position") {
     const auto material = shapes::Material::create();
     const PointLight point_light{Point{0., 10., -10.}, Color{1., 1., 1.}};
     const Point position{0., 0., 0.};
@@ -73,7 +73,7 @@ SCENARIO("Lighting with eye opposite surface, light offset 45°") {
   }
 }
 SCENARIO("Lighting with eye in the path of the reflection vector") {
-  GIVEN("Given a default material and and eye position") {
+  GIVEN("a default material and and eye position") {
     const auto material = shapes::Material::create();
     const PointLight point_light{Point{0., 10., -10.}, Color{1., 1., 1.}};
     const Point position{0., 0., 0.};
@@ -89,7 +89,7 @@ SCENARIO("Lighting with eye in the path of the reflection vector") {
   }
 }
 SCENARIO("Lighting uses light intensity to attenuate color") {
-  GIVEN("Given a  material and and eye position") {
+  GIVEN("a material and and eye position") {
     auto material = shapes::Material::create();
     material->ambient = .1;
     material->diffuse = .9;

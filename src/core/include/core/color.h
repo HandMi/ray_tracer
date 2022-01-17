@@ -46,6 +46,7 @@ constexpr Color operator*(const Color& a, const Color& b) {
 
 namespace Colors {
 constexpr Color Black{0., 0., 0.};
+constexpr Color White{1., 1., 1.};
 }
 }  // namespace ray_tracer
 
